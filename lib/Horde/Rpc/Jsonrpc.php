@@ -100,14 +100,20 @@ class Horde_Rpc_Jsonrpc extends Horde_Rpc
     function _raiseError($error, $request)
     {
         $code = $userinfo = null;
-        if (is_a($error, 'PEAR_Error')) {
+        if ($error instanceof Exception) {
+            if ($error instanceof Horde_Exception) {
+                $userinfo = $error->details;
+            }
+            $code = $error->getCode();
+            $error = $error->getMessage();
+        } elseif ($error instanceof PEAR_Error) {
             $code = $error->getCode();
             $userinfo = $error->getUserInfo();
             $error = $error->getMessage();
         }
         $error = array('name' => 'JSONRPCError',
                        'code' => $code ? $code : 999,
-                       'message' => $error);
+                       'message' => (string)$error);
         if ($userinfo) {
             $error['error'] = $userinfo;
         }
