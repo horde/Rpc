@@ -1,5 +1,5 @@
 {
-    "name": "horde/horde-rpc",
+    "name": "horde/rpc",
     "description": "Horde RPC API",
     "type": "library",
     "homepage": "https://pear.horde.org",
@@ -22,7 +22,7 @@
         }
     ],
     "version": "2.1.8",
-    "time": "2016-03-21",
+    "time": "2017-10-09",
     "repositories": [
         {
             "type": "pear",

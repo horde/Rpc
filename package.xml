@@ -22,7 +22,7 @@
   <email>mrubinsk@horde.org</email>
   <active>yes</active>
  </developer>
- <date>2017-10-05</date>
+ <date>2017-10-09</date>
  <version>
   <release>2.1.8</release>
   <api>1.0.0</api>
@@ -924,7 +924,7 @@ Converted to package.xml 2.0 for pear.horde.org
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2017-10-05</date>
+   <date>2017-10-09</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * [jan] Fix turning an Exception into a JSON-RPC error.
