@@ -74,7 +74,7 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
      * Horde_ActiveSync will read the input stream directly, do not access
      * it here.
      *
-     * @see framework/Rpc/lib/Horde/Horde_Rpc#getInput()
+     * @see Horde_Rpc#getInput()
      */
     public function getInput()
     {
@@ -184,7 +184,7 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
 
     /**
      *
-     * @see framework/Rpc/lib/Horde/Horde_Rpc#sendOutput($output)
+     * @see Horde_Rpc#sendOutput($output)
      */
     public function sendOutput($output)
     {
