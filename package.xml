@@ -22,7 +22,7 @@
   <email>mrubinsk@horde.org</email>
   <active>yes</active>
  </developer>
- <date>2017-10-05</date>
+ <date>2017-10-17</date>
  <version>
   <release>2.1.8</release>
   <api>1.0.0</api>
@@ -46,7 +46,6 @@
        <file name="xmlrpc.php" role="doc" />
        <file name="xmlrpc.pl" role="doc" />
       </dir> <!-- /doc/Horde/Rpc/examples -->
-      <file name="COPYING" role="doc" />
      </dir> <!-- /doc/Horde/Rpc -->
     </dir> <!-- /doc/Horde -->
    </dir> <!-- /doc -->
@@ -329,6 +328,7 @@
    <dir name="test">
     <file name="rpc-test.php" role="test" />
    </dir> <!-- /test -->
+   <file name="LICENSE" role="doc" />
   </dir> <!-- / -->
  </contents>
  <dependencies>
@@ -444,7 +444,6 @@
  </dependencies>
  <phprelease>
   <filelist>
-   <install as="COPYING" name="doc/Horde/Rpc/COPYING" />
    <install as="examples/soap.php" name="doc/Horde/Rpc/examples/soap.php" />
    <install as="examples/soap.pl" name="doc/Horde/Rpc/examples/soap.pl" />
    <install as="examples/xmlrpc.php" name="doc/Horde/Rpc/examples/xmlrpc.php" />
@@ -456,11 +455,11 @@
    <install as="Horde/Rpc/Phpgw.php" name="lib/Horde/Rpc/Phpgw.php" />
    <install as="Horde/Rpc/Soap.php" name="lib/Horde/Rpc/Soap.php" />
    <install as="Horde/Rpc/Syncml.php" name="lib/Horde/Rpc/Syncml.php" />
+   <install as="Horde/Rpc/Syncml/Wbxml.php" name="lib/Horde/Rpc/Syncml/Wbxml.php" />
    <install as="Horde/Rpc/Translation.php" name="lib/Horde/Rpc/Translation.php" />
    <install as="Horde/Rpc/Webdav.php" name="lib/Horde/Rpc/Webdav.php" />
    <install as="Horde/Rpc/Xmlrpc.php" name="lib/Horde/Rpc/Xmlrpc.php" />
-   <install as="Horde/Rpc/Syncml/Wbxml.php" name="lib/Horde/Rpc/Syncml/Wbxml.php" />
-   <install as="locale/Horde_Rpc.pot" name="locale/Horde_Rpc.pot" />
+   <install as="LICENSE" name="LICENSE" />
    <install as="locale/ar/LC_MESSAGES/Horde_Rpc.mo" name="locale/ar/LC_MESSAGES/Horde_Rpc.mo" />
    <install as="locale/ar/LC_MESSAGES/Horde_Rpc.po" name="locale/ar/LC_MESSAGES/Horde_Rpc.po" />
    <install as="locale/bg/LC_MESSAGES/Horde_Rpc.mo" name="locale/bg/LC_MESSAGES/Horde_Rpc.mo" />
@@ -493,6 +492,7 @@
    <install as="locale/gl/LC_MESSAGES/Horde_Rpc.po" name="locale/gl/LC_MESSAGES/Horde_Rpc.po" />
    <install as="locale/he/LC_MESSAGES/Horde_Rpc.mo" name="locale/he/LC_MESSAGES/Horde_Rpc.mo" />
    <install as="locale/he/LC_MESSAGES/Horde_Rpc.po" name="locale/he/LC_MESSAGES/Horde_Rpc.po" />
+   <install as="locale/Horde_Rpc.pot" name="locale/Horde_Rpc.pot" />
    <install as="locale/hr/LC_MESSAGES/Horde_Rpc.mo" name="locale/hr/LC_MESSAGES/Horde_Rpc.mo" />
    <install as="locale/hr/LC_MESSAGES/Horde_Rpc.po" name="locale/hr/LC_MESSAGES/Horde_Rpc.po" />
    <install as="locale/hu/LC_MESSAGES/Horde_Rpc.mo" name="locale/hu/LC_MESSAGES/Horde_Rpc.mo" />
@@ -924,7 +924,7 @@ Converted to package.xml 2.0 for pear.horde.org
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2017-10-05</date>
+   <date>2017-10-17</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * [jan] Fix turning an Exception into a JSON-RPC error.
