@@ -7,3 +7,48 @@ description: >
   functionality.
 list: dev
 type: library
+homepage: https://www.horde.org/libraries/Horde_Rpc
+authors:
+  -
+    name: Jan Schneider
+    user: jan
+    email: jan@horde.org
+    active: true
+    role: lead
+  -
+    name: Chuck Hagenbuch
+    user: chuck
+    email: chuck@horde.org
+    active: true
+    role: lead
+version:
+  release: 2.1.8
+  api: 1.0.0
+state:
+  release: stable
+  api: stable
+license:
+  identifier: LGPL-2.1
+  uri: http://www.horde.org/licenses/lgpl21
+dependencies:
+  required:
+    php: ^5.3 || ^7
+    pear:
+      pear.horde.org/Horde_Core: ^2.5
+      pear.horde.org/Horde_Dav: ^1
+      pear.horde.org/Horde_Exception: ^2
+      pear.horde.org/Horde_Perms: ^2
+      pear.horde.org/Horde_Serialize: ^2
+      pear.horde.org/Horde_Support: ^2
+      pear.horde.org/Horde_Translation: ^2.2
+      pear.horde.org/Horde_Util: ^2
+      pear.horde.org/Horde_Xml_Element: ^2
+  optional:
+    pear:
+      pear.horde.org/Horde_ActiveSync: ^2
+      pear.horde.org/Horde_Http: ^2
+      pear.horde.org/Horde_Lock: ^2
+      pear.horde.org/Horde_SyncMl: ^2
+    ext:
+      soap: '*'
+      xmlrpc: '*'
