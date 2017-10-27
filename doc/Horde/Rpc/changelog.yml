@@ -1,0 +1,316 @@
+---
+2.1.8:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2017-10-17
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Fix turning an Exception into a JSON-RPC error.
+2.1.7:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2016-03-21
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Update Greek translation (Limperis Antonis <limperis@cti.gr>).
+2.1.6:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2016-02-02
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Mark PHP 7 as supported.
+2.1.5:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2015-07-31
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mjr] Send more appropriate HTTP status codes on ActiveSync authentication failure.
+2.1.4:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2015-04-13
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mjr] Fix fatal error when using pecl_http2.
+    [mjr] Fix possible PHP error when returning HTTP 500 response.
+2.1.3:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2015-02-10
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Fix return errors from jsonrpc requests.
+2.1.2:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2015-01-09
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Support loading translations from Composer-installed package.
+    [jan] Add Composer definition.
+2.1.1:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-10-15
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mjr] Correctly catch HTTP client exceptions.
+2.1.0:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-06-04
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Final release.
+2.1.0beta1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: stable
+  date: 2013-05-13
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Use Horde_Dav for DAV RPC backends.
+2.0.5:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-05-13
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Don't require an unstable package from a stable version.
+2.0.4:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-05-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Use Horde_Dav for DAV RPC backends.
+2.0.3:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-01-29
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Update French translation (Paul De Vlieger <paul.de_vlieger@moniut.univ-bpclermont.fr>).
+2.0.2:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-12-25
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Update Basque translation (Ibon Igartua <ibon.igartua@ehu.es>).
+2.0.1:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-11-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mjr] Workaround for broken iOS ActiveSync AUTODISCOVER requests (Bug #11624).
+    [jan] Update Dutch translation (Arjen de Korte <build+horde@de-korte.org>).
+2.0.0:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-10-30
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First stable release for Horde 5.
+2.0.0RC1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: stable
+  date: 2012-10-26
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Use Horde's temporary directory for SyncML logs.
+    [mjr] Allow autodiscover requests sent as OPTIONS requests.
+2.0.0beta1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: stable
+  date: 2012-07-19
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First beta release for Horde 5.
+2.0.0alpha1:
+  api: 1.0.0
+  state:
+    release: alpha
+    api: stable
+  date: 2012-07-05
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First alpha release for Horde 5.
+1.0.4:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-05-29
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Support authentication via CGI.
+1.0.3:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-01-31
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Fix WebDAV access to application resources.
+1.0.2:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-07-27
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Update Latvian translation.
+1.0.1:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-07-05
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Update Lithuanian translation.
+    [jan] Update Brazilian Portuguese translation.
+    [jan] Update Spanish translation.
+1.0.0:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-04-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First stable release for Horde 4.
+    [mjr] Fix for broken Nokia MfE clients (Bug #9757).
+1.0.0RC2:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-29
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Second release candidate for Horde 4.
+1.0.0RC1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-22
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First release candidate for Horde 4.
+1.0.0beta1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-16
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First beta release for Horde 4.
+0.0.2:
+  api: 0.0.2
+  state:
+    release: beta
+    api: beta
+  date: 2010-10-22
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Converted to package.xml 2.0 for pear.horde.org
