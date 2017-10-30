@@ -22,7 +22,7 @@
   <email>mrubinsk@horde.org</email>
   <active>yes</active>
  </developer>
- <date>2017-10-09</date>
+ <date>2017-10-30</date>
  <version>
   <release>2.1.9</release>
   <api>1.0.0</api>
@@ -46,6 +46,7 @@
        <file name="xmlrpc.php" role="doc" />
        <file name="xmlrpc.pl" role="doc" />
       </dir> <!-- /doc/Horde/Rpc/examples -->
+      <file name="CHANGES" role="doc" />
       <file name="COPYING" role="doc" />
      </dir> <!-- /doc/Horde/Rpc -->
     </dir> <!-- /doc/Horde -->
@@ -444,6 +445,7 @@
  </dependencies>
  <phprelease>
   <filelist>
+   <install as="CHANGES" name="doc/Horde/Rpc/CHANGES" />
    <install as="COPYING" name="doc/Horde/Rpc/COPYING" />
    <install as="examples/soap.php" name="doc/Horde/Rpc/examples/soap.php" />
    <install as="examples/soap.pl" name="doc/Horde/Rpc/examples/soap.pl" />
@@ -937,7 +939,7 @@
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2017-10-09</date>
+   <date>2017-10-30</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * 
