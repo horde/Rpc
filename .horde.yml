@@ -21,6 +21,12 @@ authors:
     email: chuck@horde.org
     active: true
     role: lead
+  -
+    name: Michael J Rubinsky
+    user: mrubinsk
+    email: mrubinsk@horde.org
+    active: true
+    role: developer
 version:
   release: 2.1.9
   api: 1.0.0
