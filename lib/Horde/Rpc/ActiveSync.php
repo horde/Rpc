@@ -52,7 +52,7 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
         if ($request->getMethod() == 'POST' &&
             (((empty($this->_get['Cmd']) || empty($this->_get['DeviceId']) ||
               empty($this->_get['DeviceType'])) && empty($serverVars['QUERY_STRING'])) &&
-              stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover.xml') === false)) {
+              stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') === false)) {
 
             $this->_logger->err('Missing required parameters.');
             throw new Horde_Rpc_Exception('Your device requested the ActiveSync URL wihtout required parameters.');
@@ -95,14 +95,13 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
         case 'GET':
             if ($serverVars['REQUEST_METHOD'] == 'GET' &&
                 $this->_get['Cmd'] != 'OPTIONS' &&
-                stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover.xml') === false) {
+                stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') === false) {
 
-                $this->_logger->debug('Accessing ActiveSync endpoing from browser or missing required data.');
+                $this->_logger->debug('Accessing ActiveSync endpoint from browser or missing required data.');
                 throw new Horde_Rpc_Exception(
                     Horde_Rpc_Translation::t('Trying to access the ActiveSync endpoint from a browser. Not Supported.'));
             }
-
-            if (stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover.xml') !== false) {
+            if (stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') !== false) {
                 try {
                     if (!$this->_server->handleRequest('Autodiscover', null)) {
                         $this->_logger->err('Unknown error during Autodiscover.');
