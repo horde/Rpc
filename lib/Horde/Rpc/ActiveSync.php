@@ -103,10 +103,12 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
             }
             if (stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') !== false) {
                 try {
-                    if (!$this->_server->handleRequest('Autodiscover', null)) {
+                    $result = $this->_server->handleRequest('Autodiscover', null);
+                    if (!$result) {
                         $this->_logger->err('Unknown error during Autodiscover.');
                         throw new Horde_Exception('Unknown Error');
                     }
+                    $this->_contentType = $result;
                 } catch (Horde_Exception_AuthenticationFailure $e) {
                     $this->_sendAuthenticationFailedHeaders($e);
                     exit;
