@@ -10,7 +10,6 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     [mjr] Do not enforce autodiscover requests must be xml.
-    |
 2.1.8:
   api: 1.0.0
   state:

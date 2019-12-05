@@ -2,9 +2,7 @@
 id: Rpc
 name: Rpc
 full: RPC library
-description: >-
-  A library providing various remote methods of accessing Horde
-  functionality.
+description: A library providing various remote methods of accessing Horde functionality.
 list: dev
 type: library
 homepage: https://www.horde.org/libraries/Horde_Rpc
