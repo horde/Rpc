@@ -11,8 +11,8 @@
   notes: |
     [mjr] Do not enforce autodiscover requests must be xml.
     |
-2.1.8:
-  api: 1.0.0
+3.0.0alpha1:
+  api: 3.0.0alpha1
   state:
     release: stable
     api: stable
