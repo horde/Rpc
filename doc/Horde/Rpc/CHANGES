@@ -1,8 +1,23 @@
 ------------
+v3.0.0alpha2
+------------
+
+
+
+
+------------
 v3.0.0alpha1
 ------------
 
 [jan] Fix turning an Exception into a JSON-RPC error.
+
+
+------
+v2.1.9
+------
+
+[mjr] Do not enforce autodiscover requests must be xml.
+|
 
 
 ------

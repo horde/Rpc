@@ -1,4 +1,26 @@
 ---
+3.0.0alpha2:
+  api: 3.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2021-02-24
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |+
+    
+3.0.0alpha1:
+  api: 3.0.0alpha1
+  state:
+    release: stable
+    api: stable
+  date: 2021-02-24
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Fix turning an Exception into a JSON-RPC error.
 2.1.9:
   api: 1.0.0
   state:
@@ -11,17 +33,6 @@
   notes: |
     [mjr] Do not enforce autodiscover requests must be xml.
     |
-3.0.0alpha1:
-  api: 3.0.0alpha1
-  state:
-    release: stable
-    api: stable
-  date: 2021-02-24
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    [jan] Fix turning an Exception into a JSON-RPC error.
 2.1.7:
   api: 1.0.0
   state:
