@@ -1,4 +1,4 @@
-<phpunit bootstrap="test/Horde/Argv/bootstrap.php" colors="true">
+<phpunit bootstrap="test/Horde/Rpc/bootstrap.php" colors="true">
   <testsuites>
     <testsuite>
       <directory>test</directory>
