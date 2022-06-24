@@ -106,11 +106,13 @@ class Horde_Rpc_Soap extends Horde_Rpc
      * @param array $params          A hash containing any necessary parameters
      *                               for the method call.
      * @param SoapClient $soap       A configured SoapClient object.
-     *
+     * @param mixed $unused          This param is only here to be
+     *                               compatible with Horde_Rpc, since that
+     *                               has $driver as the first param. 
      * @return mixed  The returned result from the method
      * @throws Horde_Rpc_Exception
      */
-    public static function request($url, $method, $params, $soap)
+    public static function request($url, $method, $params, $soap, $unused = null)
     {
         try {
             return $soap->__soapCall($method, $params);

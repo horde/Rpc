@@ -113,11 +113,13 @@ class Horde_Rpc_Phpgw extends Horde_Rpc
      * @param Horde_Http_Client $client  The transport client
      * @param array $params              A hash containing any necessary
      *                                   parameters for the method call.
-     *
+     * @param mixed $unused              This param is only here to be
+     *                                   compatible with Horde_Rpc, since that
+     *                                   has $driver as the first param. 
      * @return mixed  The returned result from the method.
      * @throws Horde_Rpc_Exception
      */
-    public static function request($url, $method, $client, $params = null)
+    public static function request($url, $method, $client, $params = null, $unused = null)
     {
         $options['method'] = 'POST';
         $headers = array(
