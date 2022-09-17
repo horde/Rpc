@@ -94,7 +94,7 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
         case 'OPTIONS':
         case 'GET':
             if ($serverVars['REQUEST_METHOD'] == 'GET' &&
-                $this->_get['Cmd'] != 'OPTIONS' &&
+                (!empty($this->_get['Cmd']) && $this->_get['Cmd'] != 'OPTIONS') &&
                 stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') === false) {
 
                 $this->_logger->debug('Accessing ActiveSync endpoint from browser or missing required data.');
