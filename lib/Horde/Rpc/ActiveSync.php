@@ -221,13 +221,14 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
      */
     protected function _handleError($e)
     {
-        $trace = $e->getTraceAsString();
         $m = $e->getMessage();
         $buffer = ob_get_clean();
 
         $this->_logger->err('Error in communicating with ActiveSync server: ' . $m);
-        $this->_logger->err($trace);
+        $b = new Horde_Support_Backtrace($e);
+        $this->_logger->err((string)$b);
         $this->_logger->err('Buffer contents: ' . $buffer);
+
     }
 
     /**
