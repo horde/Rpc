@@ -22,7 +22,7 @@
             "role": "lead"
         }
     ],
-    "time": "2022-10-08",
+    "time": "2022-10-19",
     "repositories": [
         {
             "type": "composer",
@@ -41,10 +41,13 @@
         "horde/util": "^3 || dev-FRAMEWORK_6_0",
         "horde/xml_element": "^3 || dev-FRAMEWORK_6_0"
     },
-    "require-dev": {},
-    "suggest": {
+    "require-dev": {
         "horde/activesync": "^3 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3 || dev-FRAMEWORK_6_0"
+    },
+    "suggest": {
         "horde/http": "^3 || dev-FRAMEWORK_6_0",
+        "horde/activesync": "^3 || dev-FRAMEWORK_6_0",
         "horde/lock": "^3 || dev-FRAMEWORK_6_0",
         "horde/syncml": "^3 || dev-FRAMEWORK_6_0",
         "ext-soap": "*",
