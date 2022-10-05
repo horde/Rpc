@@ -27,3 +27,9 @@ run-tests.log
 /test/*/*/*/*.log
 /test/*/*/*/*.out
 
+/vendor/
+/web/
+/var/
+
+.phpunit.cache/
+composer.lock

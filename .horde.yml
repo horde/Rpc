@@ -49,10 +49,14 @@ dependencies:
       horde/xml_element: ^3
   optional:
     composer:
-      horde/activesync: ^3
       horde/http: ^3
+      horde/activesync: ^3
       horde/lock: ^3
       horde/syncml: ^3
     ext:
       soap: '*'
       xmlrpc: '*'
+  dev:
+    composer:
+      horde/activesync: ^3
+      horde/test: ^3
