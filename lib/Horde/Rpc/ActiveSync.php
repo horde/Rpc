@@ -94,7 +94,7 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
         case 'OPTIONS':
         case 'GET':
             if ($serverVars['REQUEST_METHOD'] == 'GET' &&
-                $this->_get['Cmd'] != 'OPTIONS' &&
+                (!empty($this->_get['Cmd']) && $this->_get['Cmd'] != 'OPTIONS') &&
                 stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') === false) {
 
                 $this->_logger->debug('Accessing ActiveSync endpoint from browser or missing required data.');
@@ -238,6 +238,10 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
     protected function _sendAuthenticationFailedHeaders($e)
     {
         switch ($e->getCode()) {
+        case constant('Horde_ActiveSync_Status::SERVER_ERROR_RETRY'):
+            $this->_logger->warn('Authentication server unavailable, sending 503 response.');
+            header('HTTP/1.1 503 Unavailable');
+            break;
         case Horde_ActiveSync_Status::SYNC_NOT_ALLOWED:
         case Horde_ActiveSync_Status::DEVICE_BLOCKED_FOR_USER:
             $this->_logger->notice('Sending HTTP 403 Forbidden header response.');
