@@ -23,35 +23,27 @@
     ],
     "version": "2.1.8",
     "time": "2017-11-11",
-    "repositories": [
-        {
-            "type": "pear",
-            "url": "https://pear.horde.org"
-        }
-    ],
     "require": {
         "php": "^5.3 || ^7",
-        "pear-pear.horde.org/Horde_Core": "^2.5",
-        "pear-pear.horde.org/Horde_Dav": "^1",
-        "pear-pear.horde.org/Horde_Exception": "^2",
-        "pear-pear.horde.org/Horde_Perms": "^2",
-        "pear-pear.horde.org/Horde_Serialize": "^2",
-        "pear-pear.horde.org/Horde_Support": "^2",
-        "pear-pear.horde.org/Horde_Translation": "^2.2",
-        "pear-pear.horde.org/Horde_Util": "^2",
-        "pear-pear.horde.org/Horde_Xml_Element": "^2"
+        "horde/core": "^2.5",
+        "horde/dav": "^1",
+        "horde/exception": "^2",
+        "horde/perms": "^2",
+        "horde/serialize": "^2",
+        "horde/support": "^2",
+        "horde/translation": "^2.2",
+        "horde/util": "^2",
+        "horde/xml_element": "^2"
     },
     "suggest": {
-        "pear-pear.horde.org/Horde_ActiveSync": "^2",
-        "pear-pear.horde.org/Horde_Http": "^2",
-        "pear-pear.horde.org/Horde_Lock": "^2",
-        "pear-pear.horde.org/Horde_SyncMl": "^2",
+        "horde/activesync": "^2",
+        "horde/http": "^2",
+        "horde/lock": "^2",
+        "horde/syncml": "^2",
         "ext-soap": "*",
         "ext-xmlrpc": "*"
     },
     "replace": {
-        "pear-pear.horde.org/Horde_Rpc": "2.*",
-        "pear-horde/Horde_Rpc": "2.*"
     },
     "autoload": {
         "psr-0": {
