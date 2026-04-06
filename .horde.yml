@@ -59,4 +59,3 @@ dependencies:
   dev:
     composer:
       horde/activesync: ^3
-      horde/test: ^3
