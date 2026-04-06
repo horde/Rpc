@@ -1,9 +1,10 @@
 <?php
+
 /**
  * The Horde_Rpc_xmlrpc class provides an XMLRPC implementation of the
  * Horde RPC system.
  *
- * Copyright 2002-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2002-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -18,21 +19,21 @@ class Horde_Rpc_Xmlrpc extends Horde_Rpc
      *
      * @var resource
      */
-    var $_server;
+    public $_server;
 
     /**
      * XMLRPC server constructor
      *
      * @access private
      */
-    public function __construct($request, $params = array())
+    public function __construct($request, $params = [])
     {
         parent::__construct($request, $params);
 
         $this->_server = xmlrpc_server_create();
 
         foreach ($GLOBALS['registry']->listMethods() as $method) {
-            xmlrpc_server_register_method($this->_server, str_replace('/', '.', $method), array('Horde_Rpc_Xmlrpc', '_dispatcher'));
+            xmlrpc_server_register_method($this->_server, str_replace('/', '.', $method), ['Horde_Rpc_Xmlrpc', '_dispatcher']);
         }
     }
 
@@ -43,7 +44,7 @@ class Horde_Rpc_Xmlrpc extends Horde_Rpc
      *
      * @return string  The XML encoded response from the server.
      */
-    function getResponse($request)
+    public function getResponse($request)
     {
         $response = null;
         return xmlrpc_server_call_method($this->_server, $request, $response);
@@ -61,7 +62,7 @@ class Horde_Rpc_Xmlrpc extends Horde_Rpc
      *
      * @return mixed  The result of the called registry method.
      */
-    function _dispatcher($method, $params, $data)
+    public function _dispatcher($method, $params, $data)
     {
         global $registry;
 
@@ -73,8 +74,8 @@ class Horde_Rpc_Xmlrpc extends Horde_Rpc
         try {
             $result = $registry->call($method, $params);
         } catch (Horde_Exception $e) {
-            $result = array('faultCode' => (int)$e->getCode(),
-                            'faultString' => $e->getMessage());
+            $result = ['faultCode' => (int) $e->getCode(),
+                'faultString' => $e->getMessage()];
         }
 
         return $result;
@@ -93,18 +94,18 @@ class Horde_Rpc_Xmlrpc extends Horde_Rpc
      *                                   parameters for the method call.
      * @param mixed $unused              This param is only here to be
      *                                   compatible with Horde_Rpc, since that
-     *                                   has $driver as the first param. 
+     *                                   has $driver as the first param.
      *
      * @return mixed  The returned result from the method.
      * @throws Horde_Rpc_Exception
      */
     public static function request($url, $method, $client, $params = null, $unused = null)
     {
-        $headers = array(
+        $headers = [
             'User-Agent' => 'Horde RPC client',
-            'Content-Type' => 'text/xml');
+            'Content-Type' => 'text/xml'];
         try {
-            $result = $client->post((string)$url, xmlrpc_encode_request($method, $params), $headers);
+            $result = $client->post((string) $url, xmlrpc_encode_request($method, $params), $headers);
         } catch (Horde_Http_Exception $e) {
             throw new Horde_Rpc_Exception($e);
         }
@@ -116,8 +117,8 @@ class Horde_Rpc_Xmlrpc extends Horde_Rpc
             $response = @xmlrpc_decode(substr($result->getBody(), strpos($result->getBody(), '<?xml')));
             if (is_array($response) && isset($response['faultString'])) {
                 throw new Horde_Rpc_Exception($response['faultString']);
-            } elseif (is_array($response) && isset($response[0]) &&
-                      is_array($response[0]) && isset($response[0]['faultString'])) {
+            } elseif (is_array($response) && isset($response[0])
+                      && is_array($response[0]) && isset($response[0]['faultString'])) {
                 throw new Horde_Rpc_Exception($response[0]['faultString']);
             }
 

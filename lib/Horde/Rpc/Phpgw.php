@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Horde_Rpc_Phpgw class provides an XMLRPC implementation of the
  * Horde RPC system compatible with phpgw. It is based on the
@@ -18,12 +19,12 @@ class Horde_Rpc_Phpgw extends Horde_Rpc
      *
      * @var resource
      */
-    var $_server;
+    public $_server;
 
     /**
      * XMLRPC server constructor.
      */
-    function __construct($request, $params = array())
+    public function __construct($request, $params = [])
     {
         parent::__construct($request, $params);
 
@@ -34,14 +35,14 @@ class Horde_Rpc_Phpgw extends Horde_Rpc
             $methods = explode('/', $method);
             array_shift($methods);
             $method = implode('.', $methods);
-            xmlrpc_server_register_method($this->_server, $method, array('Horde_Rpc_Phpgw', '_dispatcher'));
+            xmlrpc_server_register_method($this->_server, $method, ['Horde_Rpc_Phpgw', '_dispatcher']);
         }
     }
 
     /**
      * Authorization is done by xmlrpc method system.login.
      */
-    function authorize()
+    public function authorize()
     {
         return true;
     }
@@ -53,7 +54,7 @@ class Horde_Rpc_Phpgw extends Horde_Rpc
      *
      * @return string  The XML encoded response from the server.
      */
-    function getResponse($request)
+    public function getResponse($request)
     {
         $response = null;
         return xmlrpc_server_call_method($this->_server, $request, $response);
@@ -71,7 +72,7 @@ class Horde_Rpc_Phpgw extends Horde_Rpc
      *
      * @return mixed  The result of the called registry method.
      */
-    function _dispatcher($method, $params, $data)
+    public function _dispatcher($method, $params, $data)
     {
         global $registry;
         $method = str_replace('.', '/', 'phpgw.' . $method);
@@ -83,14 +84,14 @@ class Horde_Rpc_Phpgw extends Horde_Rpc
 
         // Try to resume a session
         if (isset($params[0]['kp3']) && $params[0]["kp3"] == session_name() && session_id() != $params[0]["sessionid"]) {
-            Horde::log("manually reload session ".$params[0]["sessionid"], 'NOTICE');
+            Horde::log("manually reload session " . $params[0]["sessionid"], 'NOTICE');
             session_regenerate_id();
             session_unset();
             session_id($params[0]["sessionid"]);
         }
 
         // Be authenticated or call system.login.
-        $authenticated = $registry->isAuthenticated() || $method== "phpgw/system/login";
+        $authenticated = $registry->isAuthenticated() || $method == "phpgw/system/login";
 
         if ($authenticated) {
             Horde::log("rpc call $method allowed", 'NOTICE');
@@ -115,18 +116,18 @@ class Horde_Rpc_Phpgw extends Horde_Rpc
      *                                   parameters for the method call.
      * @param mixed $unused              This param is only here to be
      *                                   compatible with Horde_Rpc, since that
-     *                                   has $driver as the first param. 
+     *                                   has $driver as the first param.
      * @return mixed  The returned result from the method.
      * @throws Horde_Rpc_Exception
      */
     public static function request($url, $method, $client, $params = null, $unused = null)
     {
         $options['method'] = 'POST';
-        $headers = array(
+        $headers = [
             'User-Agent' => 'Horde RPC client',
-            'Content-Type', 'text/xml');
+            'Content-Type', 'text/xml'];
         try {
-            $result = $client->post((string)$url, xmlrpc_encode_request($method, $params), $headers);
+            $result = $client->post((string) $url, xmlrpc_encode_request($method, $params), $headers);
         } catch (Horde_Http_Exception $e) {
             throw new Horde_Rpc_Exception($result);
         }
@@ -138,8 +139,8 @@ class Horde_Rpc_Phpgw extends Horde_Rpc
             $response = @xmlrpc_decode(substr($result->getBody(), strpos($result->getBody(), '<?xml')));
             if (is_array($response) && isset($response['faultString'])) {
                 throw new Horde_Rpc_Exception($response['faultString']);
-            } elseif (is_array($response) && isset($response[0]) &&
-                      is_array($response[0]) && isset($response[0]['faultString'])) {
+            } elseif (is_array($response) && isset($response[0])
+                      && is_array($response[0]) && isset($response[0]['faultString'])) {
                 throw new Horde_Rpc_Exception($response[0]['faultString']);
             }
             return $response;

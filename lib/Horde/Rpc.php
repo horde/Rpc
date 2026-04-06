@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2002-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2002-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -36,7 +37,7 @@ class Horde_Rpc
      *
      * @var array
      */
-    protected $_params = array();
+    protected $_params = [];
 
     /**
      * Do we need an authenticated user?
@@ -74,15 +75,15 @@ class Horde_Rpc
      * @param array $params  A hash containing any additional configuration or
      *                       connection parameters a subclass might need.
      */
-    public function __construct($request, $params = array())
+    public function __construct($request, $params = [])
     {
         // Create a stub if we don't have a useable logger.
         if (isset($params['logger'])
-            && is_callable(array($params['logger'], 'log'))) {
+            && is_callable([$params['logger'], 'log'])) {
             $this->_logger = $params['logger'];
             unset($params['logger']);
         } else {
-            $this->_logger = new Horde_Support_Stub;
+            $this->_logger = new Horde_Support_Stub();
         }
 
         $this->_params = $params;
@@ -125,12 +126,12 @@ class Horde_Rpc
             $hash = str_replace('Basic ', '', $serverVars['Authorization']);
             $hash = base64_decode($hash);
             if (strpos($hash, ':') !== false) {
-                list($user, $pass) = explode(':', $hash, 2);
+                [$user, $pass] = explode(':', $hash, 2);
             }
         }
 
         if (!isset($user)
-            || !$auth->authenticate($user, array('password' => $pass))) {
+            || !$auth->authenticate($user, ['password' => $pass])) {
             if ($this->_requestMissingAuthorization) {
                 header('WWW-Authenticate: Basic realm="Horde RPC"');
             }
@@ -222,13 +223,17 @@ class Horde_Rpc
      * @return mixed  The returned result from the method
      * @throws Horde_Rpc_Exception
      */
-    public static function request($driver, $url, $method, $client,
-                                   $params = null)
-    {
+    public static function request(
+        $driver,
+        $url,
+        $method,
+        $client,
+        $params = null
+    ) {
         $driver = Horde_String::ucfirst(basename($driver));
         $class = 'Horde_Rpc_' . $driver;
         if (class_exists($class)) {
-            return call_user_func(array($class, 'request'), $url, $method, $client, $params);
+            return call_user_func([$class, 'request'], $url, $method, $client, $params);
         } else {
             throw new Horde_Rpc_Exception('Class definition of ' . $class . ' not found.');
         }

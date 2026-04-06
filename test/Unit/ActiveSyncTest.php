@@ -18,6 +18,7 @@ use Horde_Rpc_ActiveSync;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 #[CoversClass(Horde_Rpc_ActiveSync::class)]
 class ActiveSyncTest extends TestCase
@@ -60,7 +61,7 @@ class ActiveSyncTest extends TestCase
 
         try {
             $this->activeSyncRpc->getResponse($request);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             // Catch any exception that might be thrown instead of exit
         }
 
