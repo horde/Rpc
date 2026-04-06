@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2009-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2009-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -17,7 +18,7 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
      *
      * @var array
      */
-    protected $_get = array();
+    protected $_get = [];
 
     /**
      * The ActiveSync server object
@@ -42,17 +43,17 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
      *   - server: (Horde_ActiveSync) The ActiveSync server object.
      *             DEFAULT: none, REQUIRED
      */
-    public function __construct(Horde_Controller_Request_Http $request, array $params = array())
+    public function __construct(Horde_Controller_Request_Http $request, array $params = [])
     {
         parent::__construct($request, $params);
         // Use the server's getGetVars() method since they might be transmitted
         // as base64 encoded binary data.
         $serverVars = $request->getServerVars();
         $this->_get = $params['server']->getGetVars();
-        if ($request->getMethod() == 'POST' &&
-            (((empty($this->_get['Cmd']) || empty($this->_get['DeviceId']) ||
-              empty($this->_get['DeviceType'])) && empty($serverVars['QUERY_STRING'])) &&
-              stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') === false)) {
+        if ($request->getMethod() == 'POST'
+            && (((empty($this->_get['Cmd']) || empty($this->_get['DeviceId'])
+              || empty($this->_get['DeviceType'])) && empty($serverVars['QUERY_STRING']))
+              && stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') === false)) {
 
             $this->_logger->err('Missing required parameters.');
             throw new Horde_Rpc_Exception('Your device requested the ActiveSync URL wihtout required parameters.');
@@ -91,24 +92,39 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
         ob_start(null, 1048576);
         $serverVars = $this->_request->getServerVars();
         switch ($serverVars['REQUEST_METHOD']) {
-        case 'OPTIONS':
-        case 'GET':
-            if ($serverVars['REQUEST_METHOD'] == 'GET' &&
-                (!empty($this->_get['Cmd']) && $this->_get['Cmd'] != 'OPTIONS') &&
-                stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') === false) {
+            case 'OPTIONS':
+            case 'GET':
+                if ($serverVars['REQUEST_METHOD'] == 'GET'
+                    && (!empty($this->_get['Cmd']) && $this->_get['Cmd'] != 'OPTIONS')
+                    && stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') === false) {
 
-                $this->_logger->debug('Accessing ActiveSync endpoint from browser or missing required data.');
-                throw new Horde_Rpc_Exception(
-                    Horde_Rpc_Translation::t('Trying to access the ActiveSync endpoint from a browser. Not Supported.'));
-            }
-            if (stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') !== false) {
+                    $this->_logger->debug('Accessing ActiveSync endpoint from browser or missing required data.');
+                    throw new Horde_Rpc_Exception(
+                        Horde_Rpc_Translation::t('Trying to access the ActiveSync endpoint from a browser. Not Supported.')
+                    );
+                }
+                if (stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover') !== false) {
+                    try {
+                        $result = $this->_server->handleRequest('Autodiscover', null);
+                        if (!$result) {
+                            $this->_logger->err('Unknown error during Autodiscover.');
+                            throw new Horde_Exception('Unknown Error');
+                        }
+                        $this->_contentType = $result;
+                    } catch (Horde_Exception_AuthenticationFailure $e) {
+                        $this->_sendAuthenticationFailedHeaders($e);
+                        exit;
+                    } catch (Horde_Exception $e) {
+                        $this->_handleError($e);
+                    }
+                    break;
+                }
+
+                $this->_logger->debug('Horde_Rpc_ActiveSync::getResponse() starting for OPTIONS');
                 try {
-                    $result = $this->_server->handleRequest('Autodiscover', null);
-                    if (!$result) {
-                        $this->_logger->err('Unknown error during Autodiscover.');
+                    if (!$this->_server->handleRequest('Options', null)) {
                         throw new Horde_Exception('Unknown Error');
                     }
-                    $this->_contentType = $result;
                 } catch (Horde_Exception_AuthenticationFailure $e) {
                     $this->_sendAuthenticationFailedHeaders($e);
                     exit;
@@ -116,58 +132,49 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
                     $this->_handleError($e);
                 }
                 break;
-            }
 
-            $this->_logger->debug('Horde_Rpc_ActiveSync::getResponse() starting for OPTIONS');
-            try {
-                if (!$this->_server->handleRequest('Options', null)) {
-                    throw new Horde_Exception('Unknown Error');
+            case 'POST':
+                // Autodiscover Request
+                if (stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover.xml') !== false) {
+                    $this->_get['Cmd'] = 'Autodiscover';
+                    $this->_get['DeviceId'] = null;
                 }
-            } catch (Horde_Exception_AuthenticationFailure $e) {
-                $this->_sendAuthenticationFailedHeaders($e);
-                exit;
-            } catch (Horde_Exception $e) {
-                $this->_handleError($e);
-            }
-            break;
 
-        case 'POST':
-            // Autodiscover Request
-            if (stripos($serverVars['REQUEST_URI'], 'autodiscover/autodiscover.xml') !== false) {
-                $this->_get['Cmd'] = 'Autodiscover';
-                $this->_get['DeviceId'] = null;
-            }
+                $this->_logger->debug('Horde_Rpc_ActiveSync::getResponse() starting for ' . $this->_get['Cmd']);
 
-            $this->_logger->debug('Horde_Rpc_ActiveSync::getResponse() starting for ' . $this->_get['Cmd']);
-
-            try {
-                $ret = $this->_server->handleRequest($this->_get['Cmd'], $this->_get['DeviceId']);
-                if ($ret === false) {
-                    throw new Horde_Rpc_Exception(sprintf(
-                        'Received FALSE while handling %s command.', $this->_get['Cmd']));
-                } elseif ($ret !== true) {
-                    $this->_contentType = $ret;
+                try {
+                    $ret = $this->_server->handleRequest($this->_get['Cmd'], $this->_get['DeviceId']);
+                    if ($ret === false) {
+                        throw new Horde_Rpc_Exception(sprintf(
+                            'Received FALSE while handling %s command.',
+                            $this->_get['Cmd']
+                        ));
+                    } elseif ($ret !== true) {
+                        $this->_contentType = $ret;
+                    }
+                } catch (Horde_ActiveSync_Exception_InvalidRequest $e) {
+                    $this->_logger->err(sprintf(
+                        'Returning HTTP 400 while handling %s command. Error is: %s',
+                        $this->_get['Cmd'],
+                        $e->getMessage()
+                    ));
+                    $this->_handleError($e);
+                    header('HTTP/1.1 400 Invalid Request');
+                    exit;
+                } catch (Horde_Exception_AuthenticationFailure $e) {
+                    $this->_sendAuthenticationFailedHeaders($e);
+                    exit;
+                } catch (Horde_Exception $e) {
+                    $this->_logger->err(sprintf(
+                        'Returning HTTP 500 while handling %s command. Error is: %s',
+                        $this->_get['Cmd'],
+                        $e->getMessage()
+                    ));
+                    $this->_handleError($e);
+                    header('HTTP/1.1 500');
+                    exit;
                 }
-            } catch (Horde_ActiveSync_Exception_InvalidRequest $e) {
-                $this->_logger->err(sprintf(
-                    'Returning HTTP 400 while handling %s command. Error is: %s',
-                    $this->_get['Cmd'], $e->getMessage()));
-               $this->_handleError($e);
-               header('HTTP/1.1 400 Invalid Request');
-               exit;
-            } catch (Horde_Exception_AuthenticationFailure $e) {
-                $this->_sendAuthenticationFailedHeaders($e);
-                exit;
-            } catch (Horde_Exception $e) {
-                $this->_logger->err(sprintf(
-                    'Returning HTTP 500 while handling %s command. Error is: %s',
-                    $this->_get['Cmd'],
-                    $e->getMessage()));
-                $this->_handleError($e);
-                header('HTTP/1.1 500');
-                exit;
-            }
-            break;
+                break;
         }
     }
 
@@ -226,7 +233,7 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
 
         $this->_logger->err('Error in communicating with ActiveSync server: ' . $m);
         $b = new Horde_Support_Backtrace($e);
-        $this->_logger->err((string)$b);
+        $this->_logger->err((string) $b);
         $this->_logger->err('Buffer contents: ' . $buffer);
 
     }
@@ -239,19 +246,19 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
     protected function _sendAuthenticationFailedHeaders($e)
     {
         switch ($e->getCode()) {
-        case constant('Horde_ActiveSync_Status::SERVER_ERROR_RETRY'):
-            $this->_logger->warn('Authentication server unavailable, sending 503 response.');
-            header('HTTP/1.1 503 Unavailable');
-            break;
-        case Horde_ActiveSync_Status::SYNC_NOT_ALLOWED:
-        case Horde_ActiveSync_Status::DEVICE_BLOCKED_FOR_USER:
-            $this->_logger->notice('Sending HTTP 403 Forbidden header response.');
-            header('HTTP/1.1 403 Forbidden');
-            break;
-        default:
-        $this->_logger->notice('Sending HTTP 401 Unauthorized header response.');
-            header('HTTP/1.1 401 Unauthorized');
-            header('WWW-Authenticate: Basic realm="Horde ActiveSync"');
+            case constant('Horde_ActiveSync_Status::SERVER_ERROR_RETRY'):
+                $this->_logger->warn('Authentication server unavailable, sending 503 response.');
+                header('HTTP/1.1 503 Unavailable');
+                break;
+            case Horde_ActiveSync_Status::SYNC_NOT_ALLOWED:
+            case Horde_ActiveSync_Status::DEVICE_BLOCKED_FOR_USER:
+                $this->_logger->notice('Sending HTTP 403 Forbidden header response.');
+                header('HTTP/1.1 403 Forbidden');
+                break;
+            default:
+                $this->_logger->notice('Sending HTTP 401 Unauthorized header response.');
+                header('HTTP/1.1 401 Unauthorized');
+                header('WWW-Authenticate: Basic realm="Horde ActiveSync"');
         }
     }
 }

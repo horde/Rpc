@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Rpc
  */
@@ -12,10 +13,10 @@ $rpc_endpoint = 'http://example.com/horde/rpc.php';
 $rpc_method = 'calendar.listCalendars';
 
 // XML-RPC options, usually username and password
-$rpc_options = array(
+$rpc_options = [
     'request.username' => '',
     'request.password' => '',
-);
+];
 
 $http_client = new Horde_Http_Client($rpc_options);
 $result = Horde_Rpc::request(
@@ -23,6 +24,7 @@ $result = Horde_Rpc::request(
     $GLOBALS['rpc_endpoint'],
     $GLOBALS['rpc_method'],
     $GLOBALS['http_client'],
-    array());
+    []
+);
 
 var_dump($result);

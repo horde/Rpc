@@ -1,9 +1,10 @@
 <?php
+
 /**
  * The Horde_Rpc_Syncml class provides a SyncML implementation of the Horde
  * RPC system.
  *
- * Copyright 2003-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2003-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -18,7 +19,7 @@ class Horde_Rpc_Syncml extends Horde_Rpc
      * SyncML handles authentication internally, so bypass the RPC framework
      * auth check by just returning true here.
      */
-    function authorize()
+    public function authorize()
     {
         return true;
     }
@@ -30,16 +31,16 @@ class Horde_Rpc_Syncml extends Horde_Rpc
      *
      * @return string  The XML encoded response from the server.
      */
-    function getResponse($request)
+    public function getResponse($request)
     {
-        $backendparms = array(
+        $backendparms = [
             /* Write debug output to this dir, must be writeable be web
              * server. */
-            'debug_dir' => Horde::getTempDir().'/sync',
+            'debug_dir' => Horde::getTempDir() . '/sync',
             /* Log all (wb)xml packets received or sent to debug_dir. */
             'debug_files' => true,
             /* Log everything. */
-            'log_level' => 'DEBUG');
+            'log_level' => 'DEBUG'];
 
         /* Create the backend. */
         $GLOBALS['backend'] = Horde_SyncMl_Backend::factory('Horde', $backendparms);
@@ -47,9 +48,14 @@ class Horde_Rpc_Syncml extends Horde_Rpc
         /* Handle request. */
         $h = new Horde_SyncMl_ContentHandler();
         $response = $h->process(
-            $request, $this->getResponseContentType(),
-            Horde::url($GLOBALS['registry']->get('webroot', 'horde') . '/rpc.php',
-                       true, -1));
+            $request,
+            $this->getResponseContentType(),
+            Horde::url(
+                $GLOBALS['registry']->get('webroot', 'horde') . '/rpc.php',
+                true,
+                -1
+            )
+        );
 
         /* Close the backend. */
         $GLOBALS['backend']->close();
@@ -62,7 +68,7 @@ class Horde_Rpc_Syncml extends Horde_Rpc
      *
      * @return string  The MIME Content-Type of the RPC response.
      */
-    function getResponseContentType()
+    public function getResponseContentType()
     {
         return 'application/vnd.syncml+xml';
     }

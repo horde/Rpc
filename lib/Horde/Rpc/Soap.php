@@ -1,9 +1,10 @@
 <?php
+
 /**
  * The Horde_Rpc_Soap class provides a PHP 5 Soap implementation
  * of the Horde RPC system.
  *
- * Copyright 2003-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2003-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -18,35 +19,35 @@ class Horde_Rpc_Soap extends Horde_Rpc
      *
      * @var object
      */
-    var $_server;
+    public $_server;
 
     /**
      * List of types to emit in the WSDL.
      *
      * @var array
      */
-    var $_allowedTypes = array();
+    public $_allowedTypes = [];
 
     /**
      * List of method names to allow.
      *
      * @var array
      */
-    var $_allowedMethods = array();
+    public $_allowedMethods = [];
 
     /**
      * Name of the SOAP service to use in the WSDL.
      *
      * @var string
      */
-    var $_serviceName = null;
+    public $_serviceName = null;
 
     /**
      * SOAP server constructor
      *
      * @access private
      */
-    public function __construct($request, $params = array())
+    public function __construct($request, $params = [])
     {
         parent::__construct($request, $params);
 
@@ -60,7 +61,7 @@ class Horde_Rpc_Soap extends Horde_Rpc
             $this->_serviceName = $params['serviceName'];
         }
 
-        $this->_server = new SoapServer(null, array('uri' => (string)Horde::url($GLOBALS['registry']->get('webroot', 'horde') . '/rpc.php', true, -1)));
+        $this->_server = new SoapServer(null, ['uri' => (string) Horde::url($GLOBALS['registry']->get('webroot', 'horde') . '/rpc.php', true, -1)]);
         $this->_server->addFunction(SOAP_FUNCTIONS_ALL);
         $this->_server->setClass('Horde_Rpc_Soap_Caller', $params);
     }
@@ -72,7 +73,7 @@ class Horde_Rpc_Soap extends Horde_Rpc
      *
      * @return string  The XML encoded response from the server.
      */
-    function getResponse($request)
+    public function getResponse($request)
     {
         if ($request == 'disco' || $request == 'wsdl') {
             /*@TODO Replace with subcalls for disco and wsdl generation from the old SOAP driver. */
@@ -85,14 +86,21 @@ class Horde_Rpc_Soap extends Horde_Rpc
         ob_start();
         $this->_server->handle($request);
         Horde::log(
-            sprintf('SOAP call: %s(%s) by %s serviced in %d seconds, sent %d bytes in response',
-                    $GLOBALS['__horde_rpc_PhpSoap']['lastMethodCalled'],
-                    implode(', ', array_map(function ($a) { return is_array($a) ? 'Array' : $a; },
-                                            $GLOBALS['__horde_rpc_PhpSoap']['lastMethodParams'])),
-                    $GLOBALS['registry']->getAuth(),
-                    time() - $beginTime,
-                    ob_get_length()),
-            'INFO');
+            sprintf(
+                'SOAP call: %s(%s) by %s serviced in %d seconds, sent %d bytes in response',
+                $GLOBALS['__horde_rpc_PhpSoap']['lastMethodCalled'],
+                implode(', ', array_map(
+                    function ($a) {
+                        return is_array($a) ? 'Array' : $a;
+                    },
+                    $GLOBALS['__horde_rpc_PhpSoap']['lastMethodParams']
+                )),
+                $GLOBALS['registry']->getAuth(),
+                time() - $beginTime,
+                ob_get_length()
+            ),
+            'INFO'
+        );
         return ob_get_clean();
     }
 
@@ -108,7 +116,7 @@ class Horde_Rpc_Soap extends Horde_Rpc
      * @param SoapClient $soap       A configured SoapClient object.
      * @param mixed $unused          This param is only here to be
      *                               compatible with Horde_Rpc, since that
-     *                               has $driver as the first param. 
+     *                               has $driver as the first param.
      * @return mixed  The returned result from the method
      * @throws Horde_Rpc_Exception
      */
@@ -123,18 +131,18 @@ class Horde_Rpc_Soap extends Horde_Rpc
 
 }
 
-class Horde_Rpc_Soap_Caller {
-
+class Horde_Rpc_Soap_Caller
+{
     /**
      * List of method names to allow.
      *
      * @var array
      */
-    protected $_allowedMethods = array();
+    protected $_allowedMethods = [];
 
     /**
      */
-    public function __construct($params = array())
+    public function __construct($params = [])
     {
         if (!empty($params['allowedMethods'])) {
             $this->_allowedMethods = $params['allowedMethods'];
@@ -164,14 +172,14 @@ class Horde_Rpc_Soap_Caller {
     {
         $method = str_replace('.', '/', $method);
 
-        if (!empty($this->_params['allowedMethods']) &&
-            !in_array($method, $this->_params['allowedMethods'])) {
+        if (!empty($this->_params['allowedMethods'])
+            && !in_array($method, $this->_params['allowedMethods'])) {
             return sprintf(Horde_Rpc_Translation::t("Method \"%s\" is not defined"), $method);
         }
 
         $GLOBALS['__horde_rpc_PhpSoap']['lastMethodCalled'] = $method;
-        $GLOBALS['__horde_rpc_PhpSoap']['lastMethodParams'] =
-            !empty($params) ? $params : array();
+        $GLOBALS['__horde_rpc_PhpSoap']['lastMethodParams']
+            = !empty($params) ? $params : [];
 
         if (!$GLOBALS['registry']->hasMethod($method)) {
             return sprintf(Horde_Rpc_Translation::t("Method \"%s\" is not defined"), $method);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Rpc
  */
@@ -12,7 +13,7 @@ $rpc_endpoint = 'http://example.com/horde/rpc.php';
 $rpc_method = 'calendar.listCalendars';
 
 // SOAP options, usually username and password
-$rpc_options = array(
+$rpc_options = [
     'login' => '',
     'password' => '',
     'namespace' => 'urn:horde',
@@ -23,7 +24,7 @@ $rpc_options = array(
     'uri' => 'urn:horde',
     'exceptions' => true,
     'trace' => true,
-);
+];
 
 $soap = new SoapClient(null, $rpc_options);
 $result = Horde_Rpc::request(
@@ -31,5 +32,6 @@ $result = Horde_Rpc::request(
     $GLOBALS['rpc_endpoint'],
     $GLOBALS['rpc_method'],
     $soap,
-    array());
+    []
+);
 var_dump($result);

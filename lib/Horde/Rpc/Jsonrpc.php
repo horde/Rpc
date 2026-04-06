@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2007-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2007-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -30,7 +31,7 @@ class Horde_Rpc_Jsonrpc extends Horde_Rpc
      *
      * @return string  The MIME Content-Type of the RPC response.
      */
-    function getResponseContentType()
+    public function getResponseContentType()
     {
         return 'application/json';
     }
@@ -42,7 +43,7 @@ class Horde_Rpc_Jsonrpc extends Horde_Rpc
      *
      * @return string  The JSON encoded response from the server.
      */
-    function getResponse($request)
+    public function getResponse($request)
     {
         $request = Horde_Serialize::unserialize($request, Horde_Serialize::JSON);
 
@@ -57,7 +58,7 @@ class Horde_Rpc_Jsonrpc extends Horde_Rpc
 
         // Convert objects to associative arrays.
         if (empty($request->params)) {
-            $params = array();
+            $params = [];
         } else {
             $params = $this->_objectsToArrays($request->params);
             if (!is_array($params)) {
@@ -79,7 +80,7 @@ class Horde_Rpc_Jsonrpc extends Horde_Rpc
         }
 
         // Return result.
-        $response = array('version' => '1.1', 'result' => $result);
+        $response = ['version' => '1.1', 'result' => $result];
         if (isset($request->id)) {
             $response['id'] = $request->id;
         }
@@ -97,7 +98,7 @@ class Horde_Rpc_Jsonrpc extends Horde_Rpc
      * @return PEAR_Error  An error object suitable for a JSON-RPC 1.1
      *                     conform error result.
      */
-    function _raiseError($error, $request)
+    public function _raiseError($error, $request)
     {
         $code = $userinfo = null;
         if ($error instanceof Exception) {
@@ -111,13 +112,13 @@ class Horde_Rpc_Jsonrpc extends Horde_Rpc
             $userinfo = $error->getUserInfo();
             $error = $error->getMessage();
         }
-        $error = array('name' => 'JSONRPCError',
-                       'code' => $code ? $code : 999,
-                       'message' => (string)$error);
+        $error = ['name' => 'JSONRPCError',
+            'code' => $code ? $code : 999,
+            'message' => (string) $error];
         if ($userinfo) {
             $error['error'] = $userinfo;
         }
-        $response = array('version' => '1.1', 'error' => $error);
+        $response = ['version' => '1.1', 'error' => $error];
         if (isset($request->id)) {
             $response['id'] = $request->id;
         }
@@ -138,34 +139,34 @@ class Horde_Rpc_Jsonrpc extends Horde_Rpc
      *                               for the method call.
      * @param mixed $unused          This param is only here to be
      *                               compatible with Horde_Rpc, since that
-     *                               has $driver as the first param. 
+     *                               has $driver as the first param.
      * @return mixed  The returned result from the method.
      * @throws Horde_Rpc_Exception
      */
     public static function request($url, $method, $client, $params = null, $unused = null)
     {
-        $headers = array(
+        $headers = [
             'User-Agent' => 'Horde RPC client',
             'Accept' => 'application/json',
-            'Content-Type' => 'application/json');
+            'Content-Type' => 'application/json'];
 
-        $data = array('version' => '1.1', 'method' => $method);
+        $data = ['version' => '1.1', 'method' => $method];
         if (!empty($params)) {
             $data['params'] = $params;
         }
         $data = Horde_Serialize::serialize($data, Horde_Serialize::JSON);
         try {
-            $result = $client->post((string)$url, $data, $headers);
+            $result = $client->post((string) $url, $data, $headers);
         } catch (Horde_Http_Exception $e) {
             throw new Horde_Rpc_Exception($e->getMessage());
         }
         if ($result->code == 500) {
             $response = Horde_Serialize::unserialize($result->getBody(), Horde_Serialize::JSON);
-            if (is_a($response, 'stdClass') &&
-                isset($response->error) &&
-                is_a($response->error, 'stdClass') &&
-                isset($response->error->name) &&
-                $response->error->name == 'JSONRPCError') {
+            if (is_a($response, 'stdClass')
+                && isset($response->error)
+                && is_a($response->error, 'stdClass')
+                && isset($response->error->name)
+                && $response->error->name == 'JSONRPCError') {
                 throw new Horde_Rpc_Exception($response->error->message);
                 /* @todo: Include more information if we have an Exception that can handle this.
                 return PEAR::raiseError($response->error->message,
@@ -190,7 +191,7 @@ class Horde_Rpc_Jsonrpc extends Horde_Rpc
      * @return mixed  stdClass objects are returned as asscociative arrays,
      *                scalars as-is, and arrays with their elements converted.
      */
-    function _objectsToArrays($data)
+    public function _objectsToArrays($data)
     {
         if (is_a($data, 'stdClass')) {
             $data = get_object_vars($data);

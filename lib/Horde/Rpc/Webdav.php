@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -40,7 +41,7 @@ class Horde_Rpc_Webdav extends Horde_Rpc
      * @param array $params  A hash containing any additional configuration or
      *                       connection parameters.
      */
-    public function __construct($request, $params = array())
+    public function __construct($request, $params = [])
     {
         parent::__construct($request, $params);
         $this->_server = $GLOBALS['injector']->getInstance('Horde_Dav_Server');
@@ -69,7 +70,5 @@ class Horde_Rpc_Webdav extends Horde_Rpc
     /**
      * Implemented in Sabre\DAV\Server.
      */
-    public function sendOutput($output)
-    {
-    }
+    public function sendOutput($output) {}
 }
