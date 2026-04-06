@@ -36,7 +36,7 @@ license:
   uri: http://www.horde.org/licenses/lgpl21
 dependencies:
   required:
-    php: ^7.4 || ^8
+    php: ^8
     composer:
       horde/core: ^3
       horde/dav: ^2
@@ -59,3 +59,9 @@ dependencies:
   dev:
     composer:
       horde/activesync: ^3
+      horde/http: ^3
+keywords:
+  - soap
+  - jsonrpc
+  - activesync
+vendor: horde
