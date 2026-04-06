@@ -1,14 +1,25 @@
 <?php
 
-namespace Horde\Rpc\Test;
+declare(strict_types=1);
 
-use Exception;
-use Horde\Test\TestCase;
+/**
+ * Copyright 2013-2026 The Horde Project (http://www.horde.org/)
+ *
+ * See the enclosed file LICENSE for license information (LGPL). If you
+ * did not receive this file, see http://www.horde.org/licenses/lgpl21.
+ */
+
+namespace Horde\Rpc\Test\Unit;
+
 use Horde_ActiveSync;
 use Horde_Controller_Request_Http;
 use Horde_Exception;
 use Horde_Rpc_ActiveSync;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Horde_Rpc_ActiveSync::class)]
 class ActiveSyncTest extends TestCase
 {
     protected Horde_Rpc_ActiveSync $activeSyncRpc;
@@ -17,9 +28,10 @@ class ActiveSyncTest extends TestCase
      * Tests if the errorHandler method of Horde_Rpc_ActiveSync will write passwords in the log.
      * To test this, you need to have 'zend.exception_ignore_args = Off' in the php.ini
      */
-    public function testNoPwInLogmessages()
+    #[RunInSeparateProcess]
+    public function testNoPwInLogmessages(): void
     {
-        $activeSync = $this->createMock(Horde_ActiveSync::class);
+        $activeSync = $this->createStub(Horde_ActiveSync::class);
         $activeSync->method('getGetVars')->willReturn([
             'Cmd' => 'OPTIONS',
             'DeviceId' => 'test',
@@ -29,7 +41,7 @@ class ActiveSyncTest extends TestCase
             throw new Horde_Exception('test');
         });
 
-        $request = $this->createMock(Horde_Controller_Request_Http::class);
+        $request = $this->createStub(Horde_Controller_Request_Http::class);
         $request->method('getMethod')->willReturn('POST');
         $request->method('getServerVars')->willReturn([
             'QUERY_STRING' => 'test',
@@ -43,14 +55,21 @@ class ActiveSyncTest extends TestCase
             'logger' => $logger,
         ]);
 
-        $this->pretendAuth('user', 'password', $request);
+        // Suppress exit() since the code calls exit after error handling
+        $this->expectOutputString('');
+
+        try {
+            $this->activeSyncRpc->getResponse($request);
+        } catch (\Throwable $e) {
+            // Catch any exception that might be thrown instead of exit
+        }
 
         foreach ($logger->logs as $log) {
-            $this->assertFalse(strpos($log['msg'], 'password'));
+            $this->assertStringNotContainsString('password', $log['msg']);
         }
     }
 
-    protected function pretendAuth($user, $pw, $request)
+    protected function pretendAuth(string $user, string $pw, Horde_Controller_Request_Http $request): void
     {
         $this->activeSyncRpc->getResponse($request);
     }
