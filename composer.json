@@ -1,5 +1,4 @@
 {
-    "minimum-stability": "dev",
     "name": "horde/rpc",
     "description": "RPC library",
     "type": "library",
@@ -22,15 +21,15 @@
             "role": "lead"
         }
     ],
-    "time": "2022-10-19",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://horde-satis.maintaina.com"
-        }
+    "keywords": [
+        "soap",
+        "jsonrpc",
+        "activesync"
     ],
+    "time": "2026-04-06",
+    "repositories": [],
     "require": {
-        "php": "^7.4 || ^8",
+        "php": "^8",
         "horde/core": "^3 || dev-FRAMEWORK_6_0",
         "horde/dav": "^2 || dev-FRAMEWORK_6_0",
         "horde/exception": "^3 || dev-FRAMEWORK_6_0",
@@ -43,7 +42,7 @@
     },
     "require-dev": {
         "horde/activesync": "^3 || dev-FRAMEWORK_6_0",
-        "horde/test": "^3 || dev-FRAMEWORK_6_0"
+        "horde/http": "^3 || dev-FRAMEWORK_6_0"
     },
     "suggest": {
         "horde/http": "^3 || dev-FRAMEWORK_6_0",
@@ -66,6 +65,11 @@
     "config": {
         "allow-plugins": {
             "horde/horde-installer-plugin": true
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-FRAMEWORK_6_0": "3.x-dev"
         }
     }
 }
