@@ -9,11 +9,11 @@ use Horde\Http\ServerRequest;
 use Horde\Http\StreamFactory;
 use Horde\Rpc\JsonRpc\JsonRpcHandler;
 use Horde\Rpc\JsonRpc\Transport\HttpHandler;
-use Horde\Rpc\JsonRpc\Transport\Middleware\JsonRpcMiddleware;
 use Horde\Rpc\Test\Unit\JsonRpc\TestDouble\CallableMapProvider;
 use Horde\Rpc\Test\Unit\JsonRpc\TestDouble\RecordingEventDispatcher;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Server\MiddlewareInterface;
 
 #[CoversClass(JsonRpcHandler::class)]
 class JsonRpcHandlerTest extends TestCase
@@ -43,7 +43,9 @@ class JsonRpcHandlerTest extends TestCase
             new RecordingEventDispatcher(),
         );
 
-        $this->assertInstanceOf(JsonRpcMiddleware::class, $facade->getMiddleware());
+        $middleware = $facade->getMiddleware();
+        $this->assertInstanceOf(MiddlewareInterface::class, $middleware);
+        $this->assertInstanceOf(HttpHandler::class, $middleware);
     }
 
     public function testFacadeHandlesRequest(): void
