@@ -7,6 +7,7 @@ namespace Horde\Rpc\Test\Unit\JsonRpc\Transport;
 use Horde\Http\ResponseFactory;
 use Horde\Http\ServerRequest;
 use Horde\Http\StreamFactory;
+use Horde\Http\Uri;
 use Horde\Rpc\JsonRpc\Dispatch\Dispatcher;
 use Horde\Rpc\JsonRpc\Event\BatchProcessing;
 use Horde\Rpc\JsonRpc\Event\ErrorOccurred;
@@ -19,6 +20,9 @@ use Horde\Rpc\Test\Unit\JsonRpc\TestDouble\CallableMapProvider;
 use Horde\Rpc\Test\Unit\JsonRpc\TestDouble\RecordingEventDispatcher;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 #[CoversClass(HttpHandler::class)]
 class HttpHandlerTest extends TestCase
@@ -284,5 +288,123 @@ class HttpHandlerTest extends TestCase
         $this->assertCount(1, $events);
         $this->assertSame(1, $events[0]->requestCount);
         $this->assertSame(1, $events[0]->notificationCount);
+    }
+
+    // --- Middleware (process()) tests ---
+
+    private function makeNextHandler(): RequestHandlerInterface
+    {
+        $responseFactory = new ResponseFactory();
+
+        return new class ($responseFactory) implements RequestHandlerInterface {
+            public function __construct(
+                private readonly \Psr\Http\Message\ResponseFactoryInterface $rf,
+            ) {}
+
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                return $this->rf->createResponse(404);
+            }
+        };
+    }
+
+    private function makeMiddlewareRequest(
+        string $method,
+        string $path,
+        string $contentType = 'application/json',
+    ): ServerRequest {
+        return new ServerRequest(
+            method: $method,
+            uri: new Uri($path),
+            headers: ['Content-Type' => $contentType],
+        );
+    }
+
+    public function testProcessMatchingPostDelegatesToHandler(): void
+    {
+        $handler = $this->makeHandler(['test' => fn() => 'ok']);
+        $body = $this->streamFactory->createStream('{"jsonrpc":"2.0","method":"test","id":1}');
+        $request = new ServerRequest(
+            method: 'POST',
+            uri: new Uri('/rpc/jsonrpc'),
+            body: $body,
+            headers: ['Content-Type' => 'application/json'],
+        );
+
+        $response = $handler->process($request, $this->makeNextHandler());
+
+        $this->assertSame(200, $response->getStatusCode());
+        $decoded = $this->decodeResponseBody((string) $response->getBody());
+        $this->assertSame('ok', $decoded['result']);
+    }
+
+    public function testProcessGetPassesToNext(): void
+    {
+        $handler = $this->makeHandler();
+        $request = $this->makeMiddlewareRequest('GET', '/rpc/jsonrpc');
+
+        $response = $handler->process($request, $this->makeNextHandler());
+
+        $this->assertSame(404, $response->getStatusCode());
+    }
+
+    public function testProcessWrongPathPassesToNext(): void
+    {
+        $handler = $this->makeHandler();
+        $request = $this->makeMiddlewareRequest('POST', '/other/path');
+
+        $response = $handler->process($request, $this->makeNextHandler());
+
+        $this->assertSame(404, $response->getStatusCode());
+    }
+
+    public function testProcessWrongContentTypePassesToNext(): void
+    {
+        $handler = $this->makeHandler();
+        $request = $this->makeMiddlewareRequest('POST', '/rpc/jsonrpc', 'text/xml');
+
+        $response = $handler->process($request, $this->makeNextHandler());
+
+        $this->assertSame(404, $response->getStatusCode());
+    }
+
+    public function testProcessJsonRpcContentTypeAccepted(): void
+    {
+        $handler = $this->makeHandler(['test' => fn() => 'ok']);
+        $body = $this->streamFactory->createStream('{"jsonrpc":"2.0","method":"test","id":1}');
+        $request = new ServerRequest(
+            method: 'POST',
+            uri: new Uri('/rpc/jsonrpc'),
+            body: $body,
+            headers: ['Content-Type' => 'application/json-rpc'],
+        );
+
+        $response = $handler->process($request, $this->makeNextHandler());
+
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testProcessCustomPath(): void
+    {
+        $provider = new CallableMapProvider(['test' => fn() => 'ok']);
+        $handler = new HttpHandler(
+            new Codec(),
+            new Dispatcher($provider, $provider),
+            $this->responseFactory,
+            $this->streamFactory,
+            $this->events,
+            path: '/api/v2/rpc',
+        );
+        $body = $this->streamFactory->createStream('{"jsonrpc":"2.0","method":"test","id":1}');
+        $request = new ServerRequest(
+            method: 'POST',
+            uri: new Uri('/api/v2/rpc'),
+            body: $body,
+            headers: ['Content-Type' => 'application/json'],
+        );
+
+        $response = $handler->process($request, $this->makeNextHandler());
+
+        $this->assertSame(200, $response->getStatusCode());
     }
 }

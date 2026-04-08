@@ -33,16 +33,25 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
 /**
- * PSR-15 request handler for JSON-RPC over HTTP.
+ * PSR-15 handler and middleware for JSON-RPC over HTTP.
+ *
+ * Implements both RequestHandlerInterface (direct routing) and
+ * MiddlewareInterface (protocol detection in a middleware stack).
+ *
+ * As middleware: detects JSON-RPC requests by method, path, and
+ * content type, handles matching requests or passes through.
+ *
+ * As handler: processes the request as JSON-RPC unconditionally.
  *
  * Returns HTTP 200 for all JSON-RPC responses (success and error),
  * HTTP 204 for JSON-RPC 2.0 notifications.
  */
-final class HttpHandler implements RequestHandlerInterface
+final class HttpHandler implements RequestHandlerInterface, MiddlewareInterface
 {
     public function __construct(
         private readonly Codec $codec,
@@ -51,9 +60,52 @@ final class HttpHandler implements RequestHandlerInterface
         private readonly StreamFactoryInterface $streamFactory,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly int $maxBatchSize = 100,
+        private readonly string $path = '/rpc/jsonrpc',
     ) {}
 
+    /**
+     * PSR-15 MiddlewareInterface: detect JSON-RPC request or pass through.
+     */
+    public function process(
+        ServerRequestInterface $request,
+        RequestHandlerInterface $next,
+    ): ResponseInterface {
+        if ($this->matches($request)) {
+            return $this->handleJsonRpc($request);
+        }
+
+        return $next->handle($request);
+    }
+
+    /**
+     * PSR-15 RequestHandlerInterface: handle request as JSON-RPC.
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        return $this->handleJsonRpc($request);
+    }
+
+    /**
+     * Check whether this request looks like a JSON-RPC request.
+     *
+     * Matches: POST + configured path + JSON content type.
+     */
+    private function matches(ServerRequestInterface $request): bool
+    {
+        if ($request->getMethod() !== 'POST') {
+            return false;
+        }
+
+        if ($request->getUri()->getPath() !== $this->path) {
+            return false;
+        }
+
+        $contentType = $request->getHeaderLine('Content-Type');
+
+        return str_contains($contentType, 'json');
+    }
+
+    private function handleJsonRpc(ServerRequestInterface $request): ResponseInterface
     {
         $body = (string) $request->getBody();
 

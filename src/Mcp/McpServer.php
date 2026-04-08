@@ -9,49 +9,56 @@ declare(strict_types=1);
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  */
 
-namespace Horde\Rpc\JsonRpc;
+namespace Horde\Rpc\Mcp;
 
 use Horde\Rpc\JsonRpc\Dispatch\ApiProviderInterface;
-use Horde\Rpc\JsonRpc\Dispatch\Dispatcher;
 use Horde\Rpc\JsonRpc\Dispatch\MethodInvokerInterface;
-use Horde\Rpc\JsonRpc\Protocol\Codec;
-use Horde\Rpc\JsonRpc\Transport\HttpHandler;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Horde\Rpc\Mcp\Protocol\ServerCapabilities;
+use Horde\Rpc\Mcp\Protocol\ServerInfo;
+use Horde\Rpc\Mcp\Transport\HttpHandler;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Server\MiddlewareInterface;
 
 /**
- * Convenience facade that wires all JSON-RPC components together.
+ * Convenience facade that wires all MCP server components together.
  *
- * Construct with your provider, invoker, and PSR factories, then
- * call getHandler() or getMiddleware() for integration.
+ * Example usage:
+ *
+ *     $server = new McpServer(
+ *         new ServerInfo('my-app', '1.0.0'),
+ *         $provider, $provider,
+ *         new ResponseFactory(), new StreamFactory(),
+ *     );
+ *     $handler = $server->getHandler();
  */
-final class JsonRpcHandler
+final class McpServer
 {
     private readonly HttpHandler $httpHandler;
 
     public function __construct(
+        ServerInfo $serverInfo,
         ApiProviderInterface $provider,
         MethodInvokerInterface $invoker,
         ResponseFactoryInterface $responseFactory,
         StreamFactoryInterface $streamFactory,
-        EventDispatcherInterface $eventDispatcher,
-        int $maxBatchSize = 100,
-        string $path = '/rpc/jsonrpc',
+        ?ResourceProviderInterface $resourceProvider = null,
+        string $path = '/mcp',
     ) {
-        $codec = new Codec();
-        $dispatcher = new Dispatcher($provider, $invoker);
-
-        $this->httpHandler = new HttpHandler(
-            $codec,
-            $dispatcher,
-            $responseFactory,
-            $streamFactory,
-            $eventDispatcher,
-            $maxBatchSize,
-            $path,
+        $capabilities = new ServerCapabilities(
+            tools: true,
+            resources: $resourceProvider !== null,
         );
+
+        $router = new McpRouter(
+            $serverInfo,
+            $capabilities,
+            $provider,
+            $invoker,
+            $resourceProvider,
+        );
+
+        $this->httpHandler = new HttpHandler($router, $responseFactory, $streamFactory, $path);
     }
 
     /**
