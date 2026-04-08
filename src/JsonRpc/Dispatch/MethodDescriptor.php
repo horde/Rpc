@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Copyright 2026 The Horde Project (http://www.horde.org/)
+ *
+ * See the enclosed file LICENSE for license information (LGPL). If you
+ * did not receive this file, see http://www.horde.org/licenses/lgpl21.
+ */
+
+namespace Horde\Rpc\JsonRpc\Dispatch;
+
+/**
+ * Metadata describing an available JSON-RPC method.
+ */
+final readonly class MethodDescriptor
+{
+    /**
+     * @param string $name Method name (dot-separated, e.g. "calendar.list")
+     * @param string $description Human-readable description
+     * @param array $parameters Parameter descriptors (name, type, required, description)
+     * @param ?string $returnType Return type description
+     */
+    public function __construct(
+        public string $name,
+        public string $description = '',
+        public array $parameters = [],
+        public ?string $returnType = null,
+    ) {}
+}
