@@ -1,7 +1,7 @@
 {
     "name": "horde/rpc",
     "description": "RPC library",
-    "type": "library",
+    "type": "horde-library",
     "homepage": "https://www.horde.org/libraries/Horde_Rpc",
     "license": "LGPL-2.1-only",
     "authors": [
@@ -24,12 +24,15 @@
     "keywords": [
         "soap",
         "jsonrpc",
+        "json-rpc",
+        "psr-15",
         "activesync"
     ],
-    "time": "2026-04-06",
+    "time": "2026-04-08",
     "repositories": [],
     "require": {
-        "php": "^8",
+        "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0 || ^3 || ^2",
+        "php": "^8.2",
         "horde/core": "^3 || dev-FRAMEWORK_6_0",
         "horde/dav": "^2 || dev-FRAMEWORK_6_0",
         "horde/exception": "^3 || dev-FRAMEWORK_6_0",
@@ -38,7 +41,13 @@
         "horde/support": "^3 || dev-FRAMEWORK_6_0",
         "horde/translation": "^3 || dev-FRAMEWORK_6_0",
         "horde/util": "^3 || dev-FRAMEWORK_6_0",
-        "horde/xml_element": "^3 || dev-FRAMEWORK_6_0"
+        "horde/xml_element": "^3 || dev-FRAMEWORK_6_0",
+        "psr/http-message": "^1.1 || ^2.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-client": "^1.0",
+        "psr/event-dispatcher": "^1.0"
     },
     "require-dev": {
         "horde/activesync": "^3 || dev-FRAMEWORK_6_0",
@@ -47,6 +56,7 @@
     "suggest": {
         "horde/http": "^3 || dev-FRAMEWORK_6_0",
         "horde/activesync": "^3 || dev-FRAMEWORK_6_0",
+        "horde/eventdispatcher": "^3 || dev-FRAMEWORK_6_0",
         "horde/lock": "^3 || dev-FRAMEWORK_6_0",
         "horde/syncml": "^3 || dev-FRAMEWORK_6_0",
         "ext-soap": "*",
@@ -55,6 +65,9 @@
     "autoload": {
         "psr-0": {
             "Horde_Rpc": "lib/"
+        },
+        "psr-4": {
+            "Horde\\Rpc\\": "src/"
         }
     },
     "autoload-dev": {
