@@ -13,6 +13,7 @@ namespace Horde\Rpc\JsonRpc\Exception;
 
 use Horde\Exception\HordeRuntimeException;
 use Horde\Rpc\JsonRpc\Protocol\ErrorCode;
+use Throwable;
 
 /**
  * JSON-RPC Internal error (-32603).
@@ -24,7 +25,7 @@ class InternalErrorException extends HordeRuntimeException implements JsonRpcThr
     public function __construct(
         string $message = 'Internal error',
         int $code = ErrorCode::InternalError->value,
-        ?\Throwable $previous = null,
+        ?Throwable $previous = null,
         private readonly mixed $errorData = null,
     ) {
         parent::__construct($message, $code, $previous);

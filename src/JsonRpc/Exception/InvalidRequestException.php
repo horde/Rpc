@@ -13,6 +13,7 @@ namespace Horde\Rpc\JsonRpc\Exception;
 
 use Horde\Exception\HordeInvalidArgumentException;
 use Horde\Rpc\JsonRpc\Protocol\ErrorCode;
+use Throwable;
 
 /**
  * JSON-RPC Invalid Request (-32600).
@@ -24,7 +25,7 @@ class InvalidRequestException extends HordeInvalidArgumentException implements J
     public function __construct(
         string $message = 'Invalid Request',
         int $code = ErrorCode::InvalidRequest->value,
-        ?\Throwable $previous = null,
+        ?Throwable $previous = null,
         private readonly mixed $errorData = null,
     ) {
         parent::__construct($message, $code, $previous);

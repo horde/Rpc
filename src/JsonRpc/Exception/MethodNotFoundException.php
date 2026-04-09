@@ -13,6 +13,7 @@ namespace Horde\Rpc\JsonRpc\Exception;
 
 use Horde\Exception\HordeRuntimeException;
 use Horde\Rpc\JsonRpc\Protocol\ErrorCode;
+use Throwable;
 
 /**
  * JSON-RPC Method not found (-32601).
@@ -24,7 +25,7 @@ class MethodNotFoundException extends HordeRuntimeException implements JsonRpcTh
     public function __construct(
         string $method,
         int $code = ErrorCode::MethodNotFound->value,
-        ?\Throwable $previous = null,
+        ?Throwable $previous = null,
         private readonly mixed $errorData = null,
     ) {
         parent::__construct("Method not found: $method", $code, $previous);

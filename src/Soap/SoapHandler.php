@@ -20,6 +20,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SoapServer;
+use Throwable;
 
 /**
  * PSR-15 handler and middleware for SOAP over HTTP.
@@ -119,7 +120,7 @@ final class SoapHandler implements RequestHandlerInterface, MiddlewareInterface
         ob_start();
         try {
             $server->handle($soapBody);
-        } catch (\Throwable) {
+        } catch (Throwable) {
             ob_end_clean();
             return $this->soapFaultResponse('Server', 'Internal error');
         }

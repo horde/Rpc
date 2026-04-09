@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Mcp\Protocol;
 
+use stdClass;
+
 /**
  * MCP server capabilities, advertised during initialization.
  */
@@ -31,14 +33,14 @@ final readonly class ServerCapabilities
             if ($this->toolsListChanged) {
                 $toolsCap['listChanged'] = true;
             }
-            $caps['tools'] = empty($toolsCap) ? new \stdClass() : $toolsCap;
+            $caps['tools'] = empty($toolsCap) ? new stdClass() : $toolsCap;
         }
         if ($this->resources) {
             $resCap = [];
             if ($this->resourcesListChanged) {
                 $resCap['listChanged'] = true;
             }
-            $caps['resources'] = empty($resCap) ? new \stdClass() : $resCap;
+            $caps['resources'] = empty($resCap) ? new stdClass() : $resCap;
         }
 
         return $caps;

@@ -17,6 +17,7 @@ use Horde\Rpc\Mcp\Protocol\ServerCapabilities;
 use Horde\Rpc\Mcp\Protocol\ServerInfo;
 use Horde\Rpc\Mcp\Protocol\ToolDescriptor;
 use JsonException;
+use Throwable;
 
 /**
  * Routes MCP JSON-RPC methods to the appropriate handler.
@@ -120,7 +121,7 @@ final class McpRouter
                 ],
                 'isError' => false,
             ];
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return [
                 'content' => [
                     ['type' => 'text', 'text' => $e->getMessage()],

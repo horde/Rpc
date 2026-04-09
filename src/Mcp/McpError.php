@@ -11,10 +11,12 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Mcp;
 
+use RuntimeException;
+
 /**
  * MCP protocol error, maps to a JSON-RPC error response.
  */
-final class McpError extends \RuntimeException
+final class McpError extends RuntimeException
 {
     public function __construct(
         string $message,

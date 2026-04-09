@@ -21,6 +21,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use stdClass;
 
 /**
  * PSR-15 handler and middleware for MCP Streamable HTTP transport.
@@ -97,7 +98,7 @@ final class HttpHandler implements RequestHandlerInterface, MiddlewareInterface
             return $this->jsonRpcError(null, -32700, 'Parse error');
         }
 
-        if (!($decoded instanceof \stdClass)) {
+        if (!($decoded instanceof stdClass)) {
             return $this->jsonRpcError(null, -32600, 'Invalid Request');
         }
 

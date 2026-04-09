@@ -23,6 +23,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
 
 #[CoversClass(HttpHandler::class)]
 class HttpHandlerTest extends TestCase
@@ -141,7 +142,7 @@ class HttpHandlerTest extends TestCase
 
     public function testGenericExceptionSanitized(): void
     {
-        $handler = $this->makeHandler(['bad' => fn() => throw new \RuntimeException('secret details')]);
+        $handler = $this->makeHandler(['bad' => fn() => throw new RuntimeException('secret details')]);
         $request = $this->makeRequest('{"jsonrpc":"2.0","method":"bad","id":1}');
 
         $response = $handler->handle($request);

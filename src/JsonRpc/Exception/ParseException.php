@@ -13,6 +13,7 @@ namespace Horde\Rpc\JsonRpc\Exception;
 
 use Horde\Exception\HordeRuntimeException;
 use Horde\Rpc\JsonRpc\Protocol\ErrorCode;
+use Throwable;
 
 /**
  * JSON-RPC Parse error (-32700).
@@ -24,7 +25,7 @@ class ParseException extends HordeRuntimeException implements JsonRpcThrowable
     public function __construct(
         string $message = 'Parse error',
         int $code = ErrorCode::ParseError->value,
-        ?\Throwable $previous = null,
+        ?Throwable $previous = null,
         private readonly mixed $errorData = null,
     ) {
         parent::__construct($message, $code, $previous);

@@ -70,7 +70,7 @@ final class JsonRpcClient
     /**
      * Send a JSON-RPC request and return the result.
      *
-     * @throws \Horde\Rpc\JsonRpc\Exception\JsonRpcThrowable On JSON-RPC error
+     * @throws Exception\JsonRpcThrowable On JSON-RPC error
      * @throws \Psr\Http\Client\ClientExceptionInterface On HTTP transport failure
      */
     public function call(string $method, array $params = []): mixed

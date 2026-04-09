@@ -17,6 +17,7 @@ use Horde\Rpc\JsonRpc\Exception\ServerErrorException;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 #[CoversClass(ParseException::class)]
 #[CoversClass(InvalidRequestException::class)]
@@ -122,7 +123,7 @@ class ExceptionTest extends TestCase
 
     public function testPreviousExceptionChaining(): void
     {
-        $previous = new \RuntimeException('root cause');
+        $previous = new RuntimeException('root cause');
         $e = new InternalErrorException('wrapper', -32603, $previous);
         $this->assertSame($previous, $e->getPrevious());
     }

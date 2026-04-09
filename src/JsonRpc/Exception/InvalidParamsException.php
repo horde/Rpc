@@ -13,6 +13,7 @@ namespace Horde\Rpc\JsonRpc\Exception;
 
 use Horde\Exception\HordeInvalidArgumentException;
 use Horde\Rpc\JsonRpc\Protocol\ErrorCode;
+use Throwable;
 
 /**
  * JSON-RPC Invalid params (-32602).
@@ -24,7 +25,7 @@ class InvalidParamsException extends HordeInvalidArgumentException implements Js
     public function __construct(
         string $message = 'Invalid params',
         int $code = ErrorCode::InvalidParams->value,
-        ?\Throwable $previous = null,
+        ?Throwable $previous = null,
         private readonly mixed $errorData = null,
     ) {
         parent::__construct($message, $code, $previous);

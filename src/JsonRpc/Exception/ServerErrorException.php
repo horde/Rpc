@@ -13,6 +13,7 @@ namespace Horde\Rpc\JsonRpc\Exception;
 
 use Horde\Exception\HordeRuntimeException;
 use InvalidArgumentException;
+use Throwable;
 
 /**
  * JSON-RPC Server error (-32000 to -32099).
@@ -24,7 +25,7 @@ class ServerErrorException extends HordeRuntimeException implements JsonRpcThrow
     public function __construct(
         string $message = 'Server error',
         int $code = -32000,
-        ?\Throwable $previous = null,
+        ?Throwable $previous = null,
         private readonly mixed $errorData = null,
     ) {
         if ($code < -32099 || $code > -32000) {

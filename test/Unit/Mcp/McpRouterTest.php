@@ -16,6 +16,7 @@ use Horde\Rpc\Mcp\Protocol\ServerInfo;
 use Horde\Rpc\Mcp\ResourceProviderInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 #[CoversClass(McpRouter::class)]
 class McpRouterTest extends TestCase
@@ -107,7 +108,7 @@ class McpRouterTest extends TestCase
     public function testToolsCallExceptionBecomesErrorResult(): void
     {
         $router = $this->makeRouter([
-            'bad' => fn() => throw new \RuntimeException('boom'),
+            'bad' => fn() => throw new RuntimeException('boom'),
         ]);
 
         $result = $router->route('tools/call', [
