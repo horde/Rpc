@@ -9,7 +9,7 @@ declare(strict_types=1);
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  */
 
-namespace Horde\Rpc\Test\Unit;
+namespace Horde\Rpc\Test\Integration;
 
 use Horde_ActiveSync;
 use Horde_Controller_Request_Http;

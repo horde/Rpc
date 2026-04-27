@@ -38,8 +38,6 @@ dependencies:
   required:
     php: ^8.2
     composer:
-      horde/core: ^3
-      horde/dav: ^2
       horde/exception: ^3
       horde/perms: ^3
       horde/serialize: ^3
@@ -55,6 +53,8 @@ dependencies:
       psr/event-dispatcher: ^1.0
   optional:
     composer:
+      horde/core: ^3
+      horde/dav: ^2
       horde/http: ^3
       horde/activesync: ^3
       horde/eventdispatcher: ^3

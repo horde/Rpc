@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Horde\Rpc\Test\Unit\JsonRpc\Dispatch;
+namespace Horde\Rpc\Test\Unit\Dispatch;
 
-use Horde\Rpc\JsonRpc\Dispatch\Result;
+use Horde\Rpc\Dispatch\Result;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

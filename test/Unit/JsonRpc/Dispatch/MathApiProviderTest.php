@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Test\Unit\JsonRpc\Dispatch;
 
+use Horde\Rpc\Dispatch\MethodDescriptor;
 use Horde\Rpc\JsonRpc\Dispatch\Dispatcher;
 use Horde\Rpc\JsonRpc\Dispatch\MathApiProvider;
-use Horde\Rpc\JsonRpc\Dispatch\MethodDescriptor;
 use Horde\Rpc\JsonRpc\Exception\InvalidParamsException;
 use Horde\Rpc\JsonRpc\Protocol\Codec;
 use Horde\Rpc\JsonRpc\Protocol\Request;

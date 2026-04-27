@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Soap;
 
-use Horde\Rpc\JsonRpc\Dispatch\ApiProviderInterface;
-use Horde\Rpc\JsonRpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\MethodInvokerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

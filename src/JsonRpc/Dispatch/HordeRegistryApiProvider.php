@@ -13,6 +13,11 @@ namespace Horde\Rpc\JsonRpc\Dispatch;
 
 use Horde_Exception;
 use Horde_Registry;
+use Horde\Rpc\Dispatch\ApiCallContext;
+use Horde\Rpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\MethodDescriptor;
+use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Exception\InternalErrorException;
 use Horde\Rpc\JsonRpc\Exception\MethodNotFoundException;
 
@@ -34,12 +39,12 @@ final class HordeRegistryApiProvider implements ApiProviderInterface, MethodInvo
         private readonly Horde_Registry $registry,
     ) {}
 
-    public function hasMethod(string $method): bool
+    public function hasMethod(string $method, ?ApiCallContext $context = null): bool
     {
         return (bool) $this->registry->hasMethod($this->dotToSlash($method));
     }
 
-    public function getMethodDescriptor(string $method): ?MethodDescriptor
+    public function getMethodDescriptor(string $method, ?ApiCallContext $context = null): ?MethodDescriptor
     {
         if (!$this->hasMethod($method)) {
             return null;
@@ -48,7 +53,7 @@ final class HordeRegistryApiProvider implements ApiProviderInterface, MethodInvo
         return new MethodDescriptor($method);
     }
 
-    public function listMethods(): array
+    public function listMethods(?ApiCallContext $context = null): array
     {
         $descriptors = [];
         foreach ($this->registry->listMethods() as $slashMethod) {
@@ -59,7 +64,7 @@ final class HordeRegistryApiProvider implements ApiProviderInterface, MethodInvo
         return $descriptors;
     }
 
-    public function invoke(string $method, array $params): Result
+    public function invoke(string $method, array $params, ?ApiCallContext $context = null): Result
     {
         $slashMethod = $this->dotToSlash($method);
 

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Test\Unit\JsonRpc\Dispatch;
 
-use Horde\Rpc\JsonRpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\ApiCallContext;
+use Horde\Rpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\MethodDescriptor;
+use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Dispatch\Dispatcher;
-use Horde\Rpc\JsonRpc\Dispatch\MethodDescriptor;
-use Horde\Rpc\JsonRpc\Dispatch\MethodInvokerInterface;
-use Horde\Rpc\JsonRpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Exception\InternalErrorException;
 use Horde\Rpc\JsonRpc\Exception\InvalidParamsException;
 use Horde\Rpc\JsonRpc\Exception\MethodNotFoundException;
@@ -40,17 +41,17 @@ class DispatcherTest extends TestCase
                 private readonly array $descriptors,
             ) {}
 
-            public function hasMethod(string $method): bool
+            public function hasMethod(string $method, ?ApiCallContext $context = null): bool
             {
                 return isset($this->descriptors[$method]);
             }
 
-            public function getMethodDescriptor(string $method): ?MethodDescriptor
+            public function getMethodDescriptor(string $method, ?ApiCallContext $context = null): ?MethodDescriptor
             {
                 return $this->descriptors[$method] ?? null;
             }
 
-            public function listMethods(): array
+            public function listMethods(?ApiCallContext $context = null): array
             {
                 return array_values($this->descriptors);
             }
@@ -62,7 +63,7 @@ class DispatcherTest extends TestCase
                 private readonly array $methods,
             ) {}
 
-            public function invoke(string $method, array $params): Result
+            public function invoke(string $method, array $params, ?ApiCallContext $context = null): Result
             {
                 return new Result(($this->methods[$method])(...$params));
             }
@@ -134,7 +135,7 @@ class DispatcherTest extends TestCase
     public function testInvokerExceptionPropagates(): void
     {
         $invoker = new class implements MethodInvokerInterface {
-            public function invoke(string $method, array $params): Result
+            public function invoke(string $method, array $params, ?ApiCallContext $context = null): Result
             {
                 throw new InvalidParamsException('Bad params');
             }
@@ -152,7 +153,7 @@ class DispatcherTest extends TestCase
     public function testInvokerInternalErrorPropagates(): void
     {
         $invoker = new class implements MethodInvokerInterface {
-            public function invoke(string $method, array $params): Result
+            public function invoke(string $method, array $params, ?ApiCallContext $context = null): Result
             {
                 throw new InternalErrorException('Something broke');
             }

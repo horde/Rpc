@@ -9,7 +9,7 @@ declare(strict_types=1);
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  */
 
-namespace Horde\Rpc\JsonRpc\Dispatch;
+namespace Horde\Rpc\Dispatch;
 
 /**
  * The outcome of a dispatched method invocation.

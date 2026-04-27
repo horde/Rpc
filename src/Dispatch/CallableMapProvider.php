@@ -9,12 +9,12 @@ declare(strict_types=1);
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  */
 
-namespace Horde\Rpc\JsonRpc\Dispatch;
+namespace Horde\Rpc\Dispatch;
 
 /**
  * Generic provider backed by a callable map.
  *
- * Each method is a name→callable pair. Implements both ApiProviderInterface
+ * Each method is a name-callable pair. Implements both ApiProviderInterface
  * (method registry) and MethodInvokerInterface (method execution), making it
  * a convenient all-in-one for simple APIs.
  *
@@ -34,7 +34,7 @@ final class CallableMapProvider implements ApiProviderInterface, MethodInvokerIn
     private readonly array $descriptors;
 
     /**
-     * @param array<string, callable> $methods Name→callable map
+     * @param array<string, callable> $methods Name-callable map
      * @param array<string, MethodDescriptor> $descriptors Optional descriptors keyed by method name.
      *        Methods without an explicit descriptor get a minimal auto-generated one.
      */
@@ -49,22 +49,22 @@ final class CallableMapProvider implements ApiProviderInterface, MethodInvokerIn
         $this->descriptors = $merged;
     }
 
-    public function hasMethod(string $method): bool
+    public function hasMethod(string $method, ?ApiCallContext $context = null): bool
     {
         return isset($this->methods[$method]);
     }
 
-    public function getMethodDescriptor(string $method): ?MethodDescriptor
+    public function getMethodDescriptor(string $method, ?ApiCallContext $context = null): ?MethodDescriptor
     {
         return $this->descriptors[$method] ?? null;
     }
 
-    public function listMethods(): array
+    public function listMethods(?ApiCallContext $context = null): array
     {
         return array_values($this->descriptors);
     }
 
-    public function invoke(string $method, array $params): Result
+    public function invoke(string $method, array $params, ?ApiCallContext $context = null): Result
     {
         return new Result(($this->methods[$method])(...$params));
     }

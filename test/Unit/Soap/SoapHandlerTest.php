@@ -8,7 +8,7 @@ use Horde\Http\ResponseFactory;
 use Horde\Http\ServerRequest;
 use Horde\Http\StreamFactory;
 use Horde\Http\Uri;
-use Horde\Rpc\JsonRpc\Dispatch\CallableMapProvider;
+use Horde\Rpc\Dispatch\CallableMapProvider;
 use Horde\Rpc\Soap\SoapHandler;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;

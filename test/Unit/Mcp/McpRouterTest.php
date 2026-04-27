@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Test\Unit\Mcp;
 
-use Horde\Rpc\JsonRpc\Dispatch\CallableMapProvider;
-use Horde\Rpc\JsonRpc\Dispatch\MethodDescriptor;
+use Horde\Rpc\Dispatch\CallableMapProvider;
+use Horde\Rpc\Dispatch\MethodDescriptor;
 use Horde\Rpc\Mcp\AuthContext;
 use Horde\Rpc\Mcp\McpError;
 use Horde\Rpc\Mcp\McpRouter;
