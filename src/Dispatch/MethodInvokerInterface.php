@@ -9,7 +9,7 @@ declare(strict_types=1);
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  */
 
-namespace Horde\Rpc\JsonRpc\Dispatch;
+namespace Horde\Rpc\Dispatch;
 
 /**
  * Executes a method by name with given parameters.
@@ -22,5 +22,5 @@ interface MethodInvokerInterface
     /**
      * Invoke a method by name with the given parameters.
      */
-    public function invoke(string $method, array $params): Result;
+    public function invoke(string $method, array $params, ?ApiCallContext $context = null): Result;
 }

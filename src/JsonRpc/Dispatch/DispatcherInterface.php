@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\JsonRpc\Dispatch;
 
+use Horde\Rpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Protocol\Request;
 
 /**

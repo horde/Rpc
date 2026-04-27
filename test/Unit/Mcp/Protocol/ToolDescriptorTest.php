@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Test\Unit\Mcp\Protocol;
 
-use Horde\Rpc\JsonRpc\Dispatch\MethodDescriptor;
+use Horde\Rpc\Dispatch\MethodDescriptor;
 use Horde\Rpc\Mcp\Protocol\ToolDescriptor;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;

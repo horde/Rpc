@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Mcp;
 
-use Horde\Rpc\JsonRpc\Dispatch\ApiProviderInterface;
-use Horde\Rpc\JsonRpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\MethodInvokerInterface;
 use Horde\Rpc\Mcp\Protocol\ServerCapabilities;
 use Horde\Rpc\Mcp\Protocol\ServerInfo;
 use Horde\Rpc\Mcp\Transport\HttpHandler;

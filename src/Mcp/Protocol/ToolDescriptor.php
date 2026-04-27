@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Mcp\Protocol;
 
-use Horde\Rpc\JsonRpc\Dispatch\MethodDescriptor;
+use Horde\Rpc\Dispatch\MethodDescriptor;
 
 /**
  * MCP tool descriptor, bridges from MethodDescriptor to MCP tool format.

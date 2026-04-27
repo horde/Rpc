@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\JsonRpc;
 
-use Horde\Rpc\JsonRpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\MethodInvokerInterface;
 use Horde\Rpc\JsonRpc\Dispatch\Dispatcher;
-use Horde\Rpc\JsonRpc\Dispatch\MethodInvokerInterface;
 use Horde\Rpc\JsonRpc\Protocol\Codec;
 use Horde\Rpc\JsonRpc\Transport\HttpHandler;
 use Psr\EventDispatcher\EventDispatcherInterface;

@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\JsonRpc\Transport;
 
+use Horde\Rpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Dispatch\DispatcherInterface;
-use Horde\Rpc\JsonRpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Event\BatchProcessing;
 use Horde\Rpc\JsonRpc\Event\ErrorOccurred;
 use Horde\Rpc\JsonRpc\Event\NotificationReceived;

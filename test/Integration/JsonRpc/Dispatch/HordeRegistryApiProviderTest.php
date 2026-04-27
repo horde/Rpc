@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Horde\Rpc\Test\Unit\JsonRpc\Dispatch;
+namespace Horde\Rpc\Test\Integration\JsonRpc\Dispatch;
 
 use Horde_Exception;
 use Horde_Registry;
+use Horde\Rpc\Dispatch\MethodDescriptor;
 use Horde\Rpc\JsonRpc\Dispatch\HordeRegistryApiProvider;
-use Horde\Rpc\JsonRpc\Dispatch\MethodDescriptor;
 use Horde\Rpc\JsonRpc\Exception\InternalErrorException;
 use Horde\Rpc\JsonRpc\Exception\MethodNotFoundException;
 use PHPUnit\Framework\Attributes\CoversClass;

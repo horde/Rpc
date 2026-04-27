@@ -11,6 +11,12 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\JsonRpc\Dispatch;
 
+use Horde\Rpc\Dispatch\ApiCallContext;
+use Horde\Rpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\CallableMapProvider;
+use Horde\Rpc\Dispatch\MethodDescriptor;
+use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Exception\InvalidParamsException;
 
 /**
@@ -121,22 +127,22 @@ final class MathApiProvider implements ApiProviderInterface, MethodInvokerInterf
         return new self();
     }
 
-    public function hasMethod(string $method): bool
+    public function hasMethod(string $method, ?ApiCallContext $context = null): bool
     {
         return $this->inner->hasMethod($method);
     }
 
-    public function getMethodDescriptor(string $method): ?MethodDescriptor
+    public function getMethodDescriptor(string $method, ?ApiCallContext $context = null): ?MethodDescriptor
     {
         return $this->inner->getMethodDescriptor($method);
     }
 
-    public function listMethods(): array
+    public function listMethods(?ApiCallContext $context = null): array
     {
         return $this->inner->listMethods();
     }
 
-    public function invoke(string $method, array $params): Result
+    public function invoke(string $method, array $params, ?ApiCallContext $context = null): Result
     {
         return $this->inner->invoke($method, $params);
     }

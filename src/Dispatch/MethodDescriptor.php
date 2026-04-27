@@ -9,10 +9,10 @@ declare(strict_types=1);
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  */
 
-namespace Horde\Rpc\JsonRpc\Dispatch;
+namespace Horde\Rpc\Dispatch;
 
 /**
- * Metadata describing an available JSON-RPC method.
+ * Metadata describing an available API method.
  */
 final readonly class MethodDescriptor
 {
