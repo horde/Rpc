@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Soap;
 
-use Horde\Rpc\Dispatch\ApiProviderInterface;
-use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\ApiProvider;
+use Horde\Rpc\Dispatch\MethodInvoker;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -41,8 +41,8 @@ use Throwable;
 final class SoapHandler implements RequestHandlerInterface, MiddlewareInterface
 {
     public function __construct(
-        private readonly ApiProviderInterface $provider,
-        private readonly MethodInvokerInterface $invoker,
+        private readonly ApiProvider $provider,
+        private readonly MethodInvoker $invoker,
         private readonly ResponseFactoryInterface $responseFactory,
         private readonly StreamFactoryInterface $streamFactory,
         private readonly string $path = '/rpc/soap',

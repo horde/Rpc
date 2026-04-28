@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Soap;
 
-use Horde\Rpc\Dispatch\ApiProviderInterface;
-use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\ApiProvider;
+use Horde\Rpc\Dispatch\MethodInvoker;
 use SoapFault;
 
 /**
@@ -20,15 +20,15 @@ use SoapFault;
  *
  * Translates SOAP method invocations to the shared dispatch layer.
  * Method names use dot notation (e.g. "calendar.list") matching the
- * ApiProviderInterface convention.
+ * ApiProvider convention.
  *
  * @internal
  */
 final class SoapCallHandler
 {
     public function __construct(
-        private readonly ApiProviderInterface $provider,
-        private readonly MethodInvokerInterface $invoker,
+        private readonly ApiProvider $provider,
+        private readonly MethodInvoker $invoker,
     ) {}
 
     /**

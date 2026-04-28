@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Mcp;
 
-use Horde\Rpc\Dispatch\ApiProviderInterface;
-use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\ApiProvider;
+use Horde\Rpc\Dispatch\MethodInvoker;
 use Horde\Rpc\Mcp\Protocol\ServerCapabilities;
 use Horde\Rpc\Mcp\Protocol\ServerInfo;
 use Horde\Rpc\Mcp\Protocol\ToolDescriptor;
@@ -32,8 +32,8 @@ final class McpRouter
     public function __construct(
         private readonly ServerInfo $serverInfo,
         private readonly ServerCapabilities $capabilities,
-        private readonly ApiProviderInterface $provider,
-        private readonly MethodInvokerInterface $invoker,
+        private readonly ApiProvider $provider,
+        private readonly MethodInvoker $invoker,
         private readonly ?ResourceProviderInterface $resourceProvider = null,
     ) {}
 

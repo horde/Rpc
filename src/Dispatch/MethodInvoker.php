@@ -16,9 +16,11 @@ namespace Horde\Rpc\Dispatch;
  *
  * Separates "what to call" from "how to call it". Implementations
  * may wrap a Horde registry, a callable map, or a PSR-11 container.
- *
- * @deprecated Use MethodInvoker instead.
  */
-interface MethodInvokerInterface extends MethodInvoker
+interface MethodInvoker
 {
+    /**
+     * Invoke a method by name with the given parameters.
+     */
+    public function invoke(string $method, array $params, ?ApiCallContext $context = null): Result;
 }

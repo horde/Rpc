@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\Mcp;
 
-use Horde\Rpc\Dispatch\ApiProviderInterface;
-use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\ApiProvider;
+use Horde\Rpc\Dispatch\MethodInvoker;
 use Horde\Rpc\Mcp\Protocol\ServerCapabilities;
 use Horde\Rpc\Mcp\Protocol\ServerInfo;
 use Horde\Rpc\Mcp\Transport\HttpHandler;
@@ -38,8 +38,8 @@ final class McpServer
 
     public function __construct(
         ServerInfo $serverInfo,
-        ApiProviderInterface $provider,
-        MethodInvokerInterface $invoker,
+        ApiProvider $provider,
+        MethodInvoker $invoker,
         ResponseFactoryInterface $responseFactory,
         StreamFactoryInterface $streamFactory,
         ?ResourceProviderInterface $resourceProvider = null,

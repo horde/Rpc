@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Horde\Rpc\Test\Unit\JsonRpc\Dispatch;
 
 use Horde\Rpc\Dispatch\ApiCallContext;
-use Horde\Rpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\ApiProvider;
 use Horde\Rpc\Dispatch\MethodDescriptor;
-use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\MethodInvoker;
 use Horde\Rpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Dispatch\Dispatcher;
 use Horde\Rpc\JsonRpc\Exception\InternalErrorException;
@@ -28,14 +28,14 @@ class DispatcherTest extends TestCase
 
     private function makeDispatcher(
         array $methods = [],
-        ?MethodInvokerInterface $invoker = null,
+        ?MethodInvoker $invoker = null,
     ): Dispatcher {
         $descriptors = [];
         foreach ($methods as $name => $callable) {
             $descriptors[$name] = new MethodDescriptor($name);
         }
 
-        $provider = new class ($descriptors) implements ApiProviderInterface {
+        $provider = new class ($descriptors) implements ApiProvider {
             public function __construct(
                 /** @var array<string, MethodDescriptor> */
                 private readonly array $descriptors,
@@ -57,7 +57,7 @@ class DispatcherTest extends TestCase
             }
         };
 
-        $invoker ??= new class ($methods) implements MethodInvokerInterface {
+        $invoker ??= new class ($methods) implements MethodInvoker {
             public function __construct(
                 /** @var array<string, callable> */
                 private readonly array $methods,
@@ -134,7 +134,7 @@ class DispatcherTest extends TestCase
 
     public function testInvokerExceptionPropagates(): void
     {
-        $invoker = new class implements MethodInvokerInterface {
+        $invoker = new class implements MethodInvoker {
             public function invoke(string $method, array $params, ?ApiCallContext $context = null): Result
             {
                 throw new InvalidParamsException('Bad params');
@@ -152,7 +152,7 @@ class DispatcherTest extends TestCase
 
     public function testInvokerInternalErrorPropagates(): void
     {
-        $invoker = new class implements MethodInvokerInterface {
+        $invoker = new class implements MethodInvoker {
             public function invoke(string $method, array $params, ?ApiCallContext $context = null): Result
             {
                 throw new InternalErrorException('Something broke');

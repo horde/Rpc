@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\JsonRpc;
 
-use Horde\Rpc\Dispatch\ApiProviderInterface;
-use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\ApiProvider;
+use Horde\Rpc\Dispatch\MethodInvoker;
 use Horde\Rpc\JsonRpc\Dispatch\Dispatcher;
 use Horde\Rpc\JsonRpc\Protocol\Codec;
 use Horde\Rpc\JsonRpc\Transport\HttpHandler;
@@ -32,8 +32,8 @@ final class JsonRpcHandler
     private readonly HttpHandler $httpHandler;
 
     public function __construct(
-        ApiProviderInterface $provider,
-        MethodInvokerInterface $invoker,
+        ApiProvider $provider,
+        MethodInvoker $invoker,
         ResponseFactoryInterface $responseFactory,
         StreamFactoryInterface $streamFactory,
         EventDispatcherInterface $eventDispatcher,

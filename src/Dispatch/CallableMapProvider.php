@@ -14,8 +14,8 @@ namespace Horde\Rpc\Dispatch;
 /**
  * Generic provider backed by a callable map.
  *
- * Each method is a name-callable pair. Implements both ApiProviderInterface
- * (method registry) and MethodInvokerInterface (method execution), making it
+ * Each method is a name-callable pair. Implements both ApiProvider
+ * (method registry) and MethodInvoker (method execution), making it
  * a convenient all-in-one for simple APIs.
  *
  * Example usage:
@@ -25,7 +25,7 @@ namespace Horde\Rpc\Dispatch;
  *         'ping'     => fn(): string => 'pong',
  *     ]);
  */
-final class CallableMapProvider implements ApiProviderInterface, MethodInvokerInterface
+final class CallableMapProvider implements ApiProvider, MethodInvoker
 {
     /** @var array<string, callable> */
     private readonly array $methods;

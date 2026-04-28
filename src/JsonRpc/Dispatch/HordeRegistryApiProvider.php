@@ -14,9 +14,9 @@ namespace Horde\Rpc\JsonRpc\Dispatch;
 use Horde_Exception;
 use Horde_Registry;
 use Horde\Rpc\Dispatch\ApiCallContext;
-use Horde\Rpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\ApiProvider;
 use Horde\Rpc\Dispatch\MethodDescriptor;
-use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\MethodInvoker;
 use Horde\Rpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Exception\InternalErrorException;
 use Horde\Rpc\JsonRpc\Exception\MethodNotFoundException;
@@ -33,7 +33,7 @@ use Horde\Rpc\JsonRpc\Exception\MethodNotFoundException;
  *     $provider = new HordeRegistryApiProvider($registry);
  *     $dispatcher = new Dispatcher($provider, $provider);
  */
-final class HordeRegistryApiProvider implements ApiProviderInterface, MethodInvokerInterface
+final class HordeRegistryApiProvider implements ApiProvider, MethodInvoker
 {
     public function __construct(
         private readonly Horde_Registry $registry,

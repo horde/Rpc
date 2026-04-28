@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Horde\Rpc\Test\Unit\JsonRpc\TestDouble;
 
 use Horde\Rpc\Dispatch\ApiCallContext;
-use Horde\Rpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\ApiProvider;
 use Horde\Rpc\Dispatch\MethodDescriptor;
-use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\MethodInvoker;
 use Horde\Rpc\Dispatch\Result;
 
 /**
  * Simple callable-map implementation for testing.
  */
-class CallableMapProvider implements ApiProviderInterface, MethodInvokerInterface
+class CallableMapProvider implements ApiProvider, MethodInvoker
 {
     /** @var array<string, callable> */
     private array $methods;

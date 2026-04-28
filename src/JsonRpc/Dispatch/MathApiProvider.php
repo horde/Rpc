@@ -12,10 +12,10 @@ declare(strict_types=1);
 namespace Horde\Rpc\JsonRpc\Dispatch;
 
 use Horde\Rpc\Dispatch\ApiCallContext;
-use Horde\Rpc\Dispatch\ApiProviderInterface;
+use Horde\Rpc\Dispatch\ApiProvider;
 use Horde\Rpc\Dispatch\CallableMapProvider;
 use Horde\Rpc\Dispatch\MethodDescriptor;
-use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\MethodInvoker;
 use Horde\Rpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Exception\InvalidParamsException;
 
@@ -30,7 +30,7 @@ use Horde\Rpc\JsonRpc\Exception\InvalidParamsException;
  *     $provider = MathApiProvider::create();
  *     $dispatcher = new Dispatcher($provider, $provider);
  */
-final class MathApiProvider implements ApiProviderInterface, MethodInvokerInterface
+final class MathApiProvider implements ApiProvider, MethodInvoker
 {
     private readonly CallableMapProvider $inner;
 

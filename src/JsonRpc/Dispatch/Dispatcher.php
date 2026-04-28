@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Horde\Rpc\JsonRpc\Dispatch;
 
-use Horde\Rpc\Dispatch\ApiProviderInterface;
-use Horde\Rpc\Dispatch\MethodInvokerInterface;
+use Horde\Rpc\Dispatch\ApiProvider;
+use Horde\Rpc\Dispatch\MethodInvoker;
 use Horde\Rpc\Dispatch\Result;
 use Horde\Rpc\JsonRpc\Exception\MethodNotFoundException;
 use Horde\Rpc\JsonRpc\Protocol\Request;
@@ -33,8 +33,8 @@ final class Dispatcher implements DispatcherInterface
     private const SYSTEM_METHODS = ['rpc.discover', 'rpc.ping'];
 
     public function __construct(
-        private readonly ApiProviderInterface $provider,
-        private readonly MethodInvokerInterface $invoker,
+        private readonly ApiProvider $provider,
+        private readonly MethodInvoker $invoker,
     ) {}
 
     public function dispatch(Request $request): Result
