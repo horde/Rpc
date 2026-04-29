@@ -28,13 +28,11 @@
         "psr-15",
         "activesync"
     ],
-    "time": "2026-04-09",
+    "time": "2026-04-29",
     "repositories": [],
     "require": {
         "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0 || ^3 || ^2",
         "php": "^8.2",
-        "horde/core": "^3 || dev-FRAMEWORK_6_0",
-        "horde/dav": "^2 || dev-FRAMEWORK_6_0",
         "horde/exception": "^3 || dev-FRAMEWORK_6_0",
         "horde/perms": "^3 || dev-FRAMEWORK_6_0",
         "horde/serialize": "^3 || dev-FRAMEWORK_6_0",
@@ -54,6 +52,8 @@
         "horde/http": "^3 || dev-FRAMEWORK_6_0"
     },
     "suggest": {
+        "horde/core": "^3 || dev-FRAMEWORK_6_0",
+        "horde/dav": "^2 || dev-FRAMEWORK_6_0",
         "horde/http": "^3 || dev-FRAMEWORK_6_0",
         "horde/activesync": "^3 || dev-FRAMEWORK_6_0",
         "horde/eventdispatcher": "^3 || dev-FRAMEWORK_6_0",

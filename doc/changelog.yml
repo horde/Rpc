@@ -62,6 +62,18 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     [jan] Fix turning an Exception into a JSON-RPC error.
+3.0.0-beta4:
+  api: 3.0.0-beta4
+  state:
+    release: beta
+    api: beta
+  date: 2026-04-29
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    refactor: Drop the Interface suffix, it was a mistake
+    feat: Generalize the ApiProviderInterface and ApiCallContext from json-rpc/mcp
 3.0.0-beta3:
   api: 3.0.0-beta3
   state:
