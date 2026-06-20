@@ -20,6 +20,4 @@ namespace Horde\Rpc\Dispatch;
  *
  * @deprecated Use ApiProvider instead.
  */
-interface ApiProviderInterface extends ApiProvider
-{
-}
+interface ApiProviderInterface extends ApiProvider {}
