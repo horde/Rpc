@@ -19,6 +19,4 @@ namespace Horde\Rpc\Dispatch;
  *
  * @deprecated Use MethodInvoker instead.
  */
-interface MethodInvokerInterface extends MethodInvoker
-{
-}
+interface MethodInvokerInterface extends MethodInvoker {}
