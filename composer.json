@@ -28,7 +28,7 @@
         "psr-15",
         "activesync"
     ],
-    "time": "2026-04-29",
+    "time": "2026-06-24",
     "repositories": [],
     "require": {
         "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0 || ^3 || ^2",
