@@ -7,20 +7,17 @@ list: dev
 type: horde-library
 homepage: https://www.horde.org/libraries/Horde_Rpc
 authors:
-  -
-    name: Jan Schneider
+  - name: Jan Schneider
     user: jan
     email: jan@horde.org
     active: true
     role: lead
-  -
-    name: Michael J Rubinsky
+  - name: Michael J Rubinsky
     user: mrubinsk
     email: mrubinsk@horde.org
     active: true
     role: developer
-  -
-    name: Chuck Hagenbuch
+  - name: Chuck Hagenbuch
     user: chuck
     email: chuck@horde.org
     active: false
@@ -82,3 +79,56 @@ vendor: horde
 quality:
   phpstan:
     level: 3
+ci-platform:
+  '8.2':
+    - php: ^8.1
+    - composer-plugin-api: ^2.2.0
+    - ext-bcmath
+    - ext-ctype
+    - ext-dom
+    - ext-hash
+    - ext-pcre
+    - ext-simplexml
+    - ext-spl
+  '8.3':
+    - php: ^8.1
+    - composer-plugin-api: ^2.2.0
+    - ext-bcmath
+    - ext-ctype
+    - ext-dom
+    - ext-hash
+    - ext-pcre
+    - ext-simplexml
+    - ext-spl
+  '8.4':
+    - php: ^8.1
+    - composer-plugin-api: ^2.2.0
+    - ext-bcmath
+    - ext-ctype
+    - ext-dom
+    - ext-hash
+    - ext-pcre
+    - ext-simplexml
+    - ext-spl
+  '8.5':
+    - php: ^8.1
+    - composer-plugin-api: ^2.2.0
+    - ext-bcmath
+    - ext-ctype
+    - ext-dom
+    - ext-hash
+    - ext-pcre
+    - ext-simplexml
+    - ext-spl
+  '8.6':
+    - php: ^8.1
+    - composer-plugin-api: ^2.2.0
+    - ext-bcmath
+    - ext-ctype
+    - ext-dom
+    - ext-hash
+    - ext-pcre
+    - ext-simplexml
+    - ext-spl
+ci-platform-flags:
+  needs_installer_plugin: true
