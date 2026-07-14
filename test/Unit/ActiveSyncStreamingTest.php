@@ -63,11 +63,10 @@ class ActiveSyncStreamingTest extends TestCase
 
         // The buffered path would call ob_end_clean()/echo; streaming must
         // touch neither an output buffer nor the passed data.
+        $this->expectOutputString('');
         $level = ob_get_level();
         $rpc->sendOutput('ignored');
         $this->assertSame($level, ob_get_level());
-        $this->expectOutputString('');
-    }
 
     protected function rpc(array $params, string $cmd): Horde_Rpc_ActiveSync
     {
