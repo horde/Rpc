@@ -116,8 +116,13 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
         if ($this->_streaming) {
             // Compression would buffer the body and defeat streaming.
             @ini_set('zlib.output_compression', 0);
+            // Discard pre-existing output buffers: flushing them could leak
+            // stray bytes (whitespace, notices) ahead of the WBXML stream.
+            // Non-removable buffers return false; stop instead of looping.
             while (ob_get_level()) {
-                ob_end_flush();
+                if (!@ob_end_clean()) {
+                    break;
+                }
             }
             $this->_logger->debug('Horde_Rpc_ActiveSync: streaming response body for Sync.');
         } else {

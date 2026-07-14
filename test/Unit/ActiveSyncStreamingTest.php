@@ -67,6 +67,7 @@ class ActiveSyncStreamingTest extends TestCase
         $level = ob_get_level();
         $rpc->sendOutput('ignored');
         $this->assertSame($level, ob_get_level());
+    }
 
     protected function rpc(array $params, string $cmd): Horde_Rpc_ActiveSync
     {
