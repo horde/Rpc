@@ -7,6 +7,7 @@
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  *
  * @author   Michael J Rubinsky <mrubinsk@horde.org>
+ * @author   Torben Dannhauer <torben@dannhauer.de>
  *
  * @category Horde
  * @package  Rpc
@@ -35,6 +36,15 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
     protected $_contentType = 'application/vnd.ms-sync.wbxml';
 
     /**
+     * Whether the current request streams its response body to the client
+     * while the handler is still running (Sync command only, opt-in via the
+     * 'streaming' parameter).
+     *
+     * @var boolean
+     */
+    protected $_streaming = false;
+
+    /**
      * Constructor.
      *
      * @param Horde_Controller_Request_Http  The request object.
@@ -42,6 +52,10 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
      * @param array $params  A hash containing configuration parameters:
      *   - server: (Horde_ActiveSync) The ActiveSync server object.
      *             DEFAULT: none, REQUIRED
+     *   - streaming: (boolean) Stream Sync response bodies to the client
+     *                (chunked transfer-encoding) instead of buffering the
+     *                full response and sending it with Content-Length.
+     *                DEFAULT: false
      */
     public function __construct(Horde_Controller_Request_Http $request, array $params = [])
     {
@@ -89,8 +103,26 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
      */
     public function getResponse($request)
     {
-        ob_start(null, 1048576);
         $serverVars = $this->_request->getServerVars();
+
+        /* Stream Sync responses so WBXML bytes reach the client while the
+         * handler is still assembling messages. Some clients (Gmail Android)
+         * abort after ~30s without response body bytes and then never
+         * recover. Without a Content-Length header the webserver applies
+         * chunked transfer-encoding. All other commands keep the buffered
+         * Content-Length path (see Bug #12486 for GetAttachment). */
+        $this->_streaming = $this->_shouldStreamResponse($serverVars);
+
+        if ($this->_streaming) {
+            // Compression would buffer the body and defeat streaming.
+            @ini_set('zlib.output_compression', 0);
+            while (ob_get_level()) {
+                ob_end_flush();
+            }
+            $this->_logger->debug('Horde_Rpc_ActiveSync: streaming response body for Sync.');
+        } else {
+            ob_start(null, 1048576);
+        }
         switch ($serverVars['REQUEST_METHOD']) {
             case 'OPTIONS':
             case 'GET':
@@ -159,7 +191,11 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
                         $e->getMessage()
                     ));
                     $this->_handleError($e);
-                    header('HTTP/1.1 400 Invalid Request');
+                    // When streaming, body bytes may already be on the wire;
+                    // the status line can no longer be changed.
+                    if (!headers_sent()) {
+                        header('HTTP/1.1 400 Invalid Request');
+                    }
                     exit;
                 } catch (Horde_Exception_AuthenticationFailure $e) {
                     $this->_sendAuthenticationFailedHeaders($e);
@@ -171,7 +207,11 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
                         $e->getMessage()
                     ));
                     $this->_handleError($e);
-                    header('HTTP/1.1 500');
+                    // When streaming, body bytes may already be on the wire;
+                    // the status line can no longer be changed.
+                    if (!headers_sent()) {
+                        header('HTTP/1.1 500');
+                    }
                     exit;
                 }
                 break;
@@ -196,6 +236,14 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
      */
     public function sendOutput($output)
     {
+        if ($this->_streaming) {
+            // Streaming Sync: the handler already flushed the body to the
+            // client; nothing is buffered here. Push any remaining SAPI
+            // buffer and finish the (chunked) response.
+            flush();
+            return;
+        }
+
         // Unfortunately, even though we can stream the data to the client
         // with a chunked encoding, using chunked encoding also breaks the
         // progress bar on the PDA. So we de-chunk here and just output a
@@ -220,6 +268,25 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
     }
 
     /**
+     * Should the response body be streamed to the client?
+     *
+     * Only Sync POST requests stream, and only when enabled via the
+     * 'streaming' parameter. All other commands (GetAttachment,
+     * ItemOperations, ...) keep the buffered Content-Length response.
+     *
+     * @param array $serverVars  The request's server variables.
+     *
+     * @return boolean
+     */
+    protected function _shouldStreamResponse($serverVars)
+    {
+        return !empty($this->_params['streaming'])
+            && $serverVars['REQUEST_METHOD'] == 'POST'
+            && !empty($this->_get['Cmd'])
+            && $this->_get['Cmd'] == 'Sync';
+    }
+
+    /**
      * Output exception information to the logger.
      *
      * @param Exception $e  The exception
@@ -229,7 +296,8 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
     protected function _handleError($e)
     {
         $m = $e->getMessage();
-        $buffer = ob_get_clean();
+        // No output buffer is active when streaming.
+        $buffer = ob_get_level() ? ob_get_clean() : '';
 
         $this->_logger->err('Error in communicating with ActiveSync server: ' . $m);
         $b = new Horde_Support_Backtrace($e);
