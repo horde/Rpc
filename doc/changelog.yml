@@ -1,4 +1,14 @@
 ---
+3.1.0:
+  api: 3.1.0
+  state:
+    release: stable
+    api: stable
+  date: 2026-07-18
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: "Merge pull request #5 from horde/feat/sync-response-streaming\nfix(rpc): address streaming review findings\nPotential fix for pull request finding\nfeat(rpc): stream ActiveSync Sync response bodies"
 3.0.0:
   api: 3.0.0
   state:
