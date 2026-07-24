@@ -37,8 +37,8 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
 
     /**
      * Whether the current request streams its response body to the client
-     * while the handler is still running (Sync command only, opt-in via the
-     * 'streaming' parameter).
+     * while the handler is still running (Sync command only; controlled via
+     * the 'streaming' parameter, enabled by default in Horde conf).
      *
      * @var boolean
      */
