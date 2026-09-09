@@ -37,7 +37,7 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
 
     /**
      * Whether the current request streams its response body to the client
-     * while the handler is still running (Sync command only; controlled via
+     * while the handler is still running (Sync and Search; controlled via
      * the 'streaming' parameter, enabled by default in Horde conf).
      *
      * @var boolean
@@ -52,9 +52,9 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
      * @param array $params  A hash containing configuration parameters:
      *   - server: (Horde_ActiveSync) The ActiveSync server object.
      *             DEFAULT: none, REQUIRED
-     *   - streaming: (boolean) Stream Sync response bodies to the client
-     *                (chunked transfer-encoding) instead of buffering the
-     *                full response and sending it with Content-Length.
+     *   - streaming: (boolean) Stream Sync and Search response bodies to the
+     *                client (chunked transfer-encoding) instead of buffering
+     *                the full response and sending it with Content-Length.
      *                DEFAULT: false
      */
     public function __construct(Horde_Controller_Request_Http $request, array $params = [])
@@ -105,12 +105,12 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
     {
         $serverVars = $this->_request->getServerVars();
 
-        /* Stream Sync responses so WBXML bytes reach the client while the
-         * handler is still assembling messages. Some clients (Gmail Android)
-         * abort after ~30s without response body bytes and then never
-         * recover. Without a Content-Length header the webserver applies
-         * chunked transfer-encoding. All other commands keep the buffered
-         * Content-Length path (see Bug #12486 for GetAttachment). */
+        /* Stream Sync and Search responses so WBXML bytes reach the client
+         * while the handler is still working. Some clients (Gmail Android)
+         * abort after ~30s without response body bytes (`SocketTimeout`) and
+         * then never recover. Without a Content-Length header the webserver
+         * applies chunked transfer-encoding. All other commands keep the
+         * buffered Content-Length path (see Bug #12486 for GetAttachment). */
         $this->_streaming = $this->_shouldStreamResponse($serverVars);
 
         if ($this->_streaming) {
@@ -124,7 +124,10 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
                     break;
                 }
             }
-            $this->_logger->debug('Horde_Rpc_ActiveSync: streaming response body for Sync.');
+            $this->_logger->debug(sprintf(
+                'Horde_Rpc_ActiveSync: streaming response body for %s.',
+                $this->_get['Cmd'] ?? 'unknown'
+            ));
         } else {
             ob_start(null, 1048576);
         }
@@ -242,8 +245,8 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
     public function sendOutput($output)
     {
         if ($this->_streaming) {
-            // Streaming Sync: the handler already flushed the body to the
-            // client; nothing is buffered here. Push any remaining SAPI
+            // Streaming Sync/Search: the handler already flushed the body to
+            // the client; nothing is buffered here. Push any remaining SAPI
             // buffer and finish the (chunked) response.
             flush();
             return;
@@ -275,9 +278,9 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
     /**
      * Should the response body be streamed to the client?
      *
-     * Only Sync POST requests stream, and only when enabled via the
+     * Sync and Search POST requests stream when enabled via the
      * 'streaming' parameter. All other commands (GetAttachment,
-     * ItemOperations, ...) keep the buffered Content-Length response.
+     * ItemOperations, Ping, ...) keep the buffered Content-Length response.
      *
      * @param array $serverVars  The request's server variables.
      *
@@ -288,7 +291,7 @@ class Horde_Rpc_ActiveSync extends Horde_Rpc
         return !empty($this->_params['streaming'])
             && $serverVars['REQUEST_METHOD'] == 'POST'
             && !empty($this->_get['Cmd'])
-            && $this->_get['Cmd'] == 'Sync';
+            && in_array($this->_get['Cmd'], ['Sync', 'Search'], true);
     }
 
     /**
