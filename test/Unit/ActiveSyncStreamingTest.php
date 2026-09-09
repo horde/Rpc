@@ -25,9 +25,12 @@ use ReflectionClass;
 #[CoversClass(Horde_Rpc_ActiveSync::class)]
 class ActiveSyncStreamingTest extends TestCase
 {
-    public function testStreamsOnlySyncPostWithStreamingEnabled(): void
+    public function testStreamsOnlySyncAndSearchPostWithStreamingEnabled(): void
     {
         $rpc = $this->rpc(['streaming' => true], 'Sync');
+        $this->assertTrue($this->shouldStream($rpc, 'POST'));
+
+        $rpc = $this->rpc(['streaming' => true], 'Search');
         $this->assertTrue($this->shouldStream($rpc, 'POST'));
     }
 
@@ -43,6 +46,9 @@ class ActiveSyncStreamingTest extends TestCase
         $this->assertFalse($this->shouldStream($rpc, 'POST'));
 
         $rpc = $this->rpc(['streaming' => true], 'ItemOperations');
+        $this->assertFalse($this->shouldStream($rpc, 'POST'));
+
+        $rpc = $this->rpc(['streaming' => true], 'Find');
         $this->assertFalse($this->shouldStream($rpc, 'POST'));
     }
 
