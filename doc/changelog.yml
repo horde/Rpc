@@ -1,4 +1,16 @@
 ---
+3.2.0:
+  api: 3.2.0
+  state:
+    release: stable
+    api: stable
+  date: 2026-11-13
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    feat(rpc): stream ActiveSync Search responses
+    chore(rpc): note Sync streaming is enabled by default
 3.1.0:
   api: 3.1.0
   state:
@@ -8,7 +20,11 @@
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: "Merge pull request #5 from horde/feat/sync-response-streaming\nfix(rpc): address streaming review findings\nPotential fix for pull request finding\nfeat(rpc): stream ActiveSync Sync response bodies"
+  notes: |-
+    Merge pull request #5 from horde/feat/sync-response-streaming
+    fix(rpc): address streaming review findings
+    Potential fix for pull request finding
+    feat(rpc): stream ActiveSync Sync response bodies
 3.0.0:
   api: 3.0.0
   state:
@@ -28,7 +44,10 @@
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: "style: ws\nfeat(soap): add SOAP client with PSR-18 transport and SoapException\nchore: Update workflow dependency"
+  notes: |-
+    style: ws
+    feat(soap): add SOAP client with PSR-18 transport and SoapException
+    chore: Update workflow dependency
 3.0.0-beta4:
   api: 3.0.0-beta4
   state:
@@ -38,7 +57,9 @@
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: "refactor: Drop the Interface suffix, it was a mistake\nfeat: Generalize the ApiProviderInterface and ApiCallContext from json-rpc/mcp"
+  notes: |-
+    refactor: Drop the Interface suffix, it was a mistake
+    feat: Generalize the ApiProviderInterface and ApiCallContext from json-rpc/mcp
 3.0.0-beta3:
   api: 3.0.0-beta3
   state:
@@ -48,7 +69,10 @@
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: "style: php-cs-fixer\ndocs: Document the new handlers\nfeat: Modern RPC Server design"
+  notes: |-
+    style: php-cs-fixer
+    docs: Document the new handlers
+    feat: Modern RPC Server design
 3.0.0-beta2:
   api: 3.0.0-beta2
   state:
@@ -58,7 +82,9 @@
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: "feat: Implement a modern JSON-RPC 1.1 and 2.0 server component\nchore(hordeyml): Change type to horde-library because of composer plugin dependency"
+  notes: |-
+    feat: Implement a modern JSON-RPC 1.1 and 2.0 server component
+    chore(hordeyml): Change type to horde-library because of composer plugin dependency
 3.0.0-beta1:
   api: 3.0.0-beta1
   state:
@@ -68,7 +94,75 @@
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: "chore(hordeymlfile): Add keywords\nstyle: php-cs-fixer\nchore: gitignore entries\ntest: Formally update test suite\nDevelopment mode for Rpc-3.0.0alpha6\nReleased Rpc-3.0.0alpha5\nfix potential for password in logfile\nadded unittest for password in log\nadded release workflow\nDevelopment mode for Rpc-3.0.0alpha5\nReleased Rpc-3.0.0alpha4\nworkaround so Horde_Rpc extending classes are compatible to Horde_Rpc\nUpdate metadata and workflows for PHP 8 support\nAdd CI job for satis repo update\nDevelopment mode for Rpc-3.0.0alpha5\nReleased Rpc-3.0.0alpha3\nDevelopment mode for Rpc-3.0.0alpha4\nReleased Rpc-3.0.0alpha2\nDevelopment mode for Rpc-3.0.0alpha3\nReleased Rpc-3.0.0alpha1\nComponents updated the package files.\nAvoid existence warning\nFix Travis builds.\nReturn 503 if auth server is unavailable\nUpdate supported PHP versions and configuration names.\n[mjr] Do not enforce autodiscover requests must be xml.\nFix sending proper Content-Type header.\nSupport .json as well as .xml filetypes.\nStandardize descriptions.\nAdd chomp character.\nReduce the log level on these.\nEnable PHP 7.3 CI.\nUpdate package definitions.\nFix getting exit code on PHP 7.2+.\nMark Chuck and Michael as inactive.\nAdd missing authors.\nCreate CHANGES for all components.\nRegenerate package.xml from changelog.yml.\nBuild changelog.yml from existing changelog(s).\nUpdate .horde.yml with extended information.\nUpdate composer.json.\nEnable 7.2 builds.\nPEAR on 5.6 and 7.0 is fixed.\nUpdate references to COPYING files.\nUse LICENSE consistently and move to base directory.\nStop flooding #horde channel.\nUse https URLs.\nMigrated from framework/ to split repositories.\nInstall all dependencies but PECL extensions.\nHopefully this finally fixes Travis builds now.\nAlways discover channel manually, due to Travis bug.\nFix Travis tests.\nAdd Travis configuration and .gitignore files.\nTest webhook.\n[jan] Fix turning an Exception into a JSON-RPC error.\nUpdate Turkish translations.\nUpdate tr translation.\nAdd type parameter to .horde.yml files.\nUpdate composer information.\nUpdated composer definitions.\nRename horde.yml files.\nDon't use create_function().\nStandardize library full names.\nGenerate horde.yml files for all components.\nHappy New Year!\nUse HTTPS.\nphpdoc, spelling, etc...\nDevelopment mode for Horde_Rpc-2.1.8"
+  notes: |-
+    chore(hordeymlfile): Add keywords
+    style: php-cs-fixer
+    chore: gitignore entries
+    test: Formally update test suite
+    Development mode for Rpc-3.0.0alpha6
+    Released Rpc-3.0.0alpha5
+    fix potential for password in logfile
+    added unittest for password in log
+    added release workflow
+    Development mode for Rpc-3.0.0alpha5
+    Released Rpc-3.0.0alpha4
+    workaround so Horde_Rpc extending classes are compatible to Horde_Rpc
+    Update metadata and workflows for PHP 8 support
+    Add CI job for satis repo update
+    Development mode for Rpc-3.0.0alpha5
+    Released Rpc-3.0.0alpha3
+    Development mode for Rpc-3.0.0alpha4
+    Released Rpc-3.0.0alpha2
+    Development mode for Rpc-3.0.0alpha3
+    Released Rpc-3.0.0alpha1
+    Components updated the package files.
+    Avoid existence warning
+    Fix Travis builds.
+    Return 503 if auth server is unavailable
+    Update supported PHP versions and configuration names.
+    [mjr] Do not enforce autodiscover requests must be xml.
+    Fix sending proper Content-Type header.
+    Support .json as well as .xml filetypes.
+    Standardize descriptions.
+    Add chomp character.
+    Reduce the log level on these.
+    Enable PHP 7.3 CI.
+    Update package definitions.
+    Fix getting exit code on PHP 7.2+.
+    Mark Chuck and Michael as inactive.
+    Add missing authors.
+    Create CHANGES for all components.
+    Regenerate package.xml from changelog.yml.
+    Build changelog.yml from existing changelog(s).
+    Update .horde.yml with extended information.
+    Update composer.json.
+    Enable 7.2 builds.
+    PEAR on 5.6 and 7.0 is fixed.
+    Update references to COPYING files.
+    Use LICENSE consistently and move to base directory.
+    Stop flooding #horde channel.
+    Use https URLs.
+    Migrated from framework/ to split repositories.
+    Install all dependencies but PECL extensions.
+    Hopefully this finally fixes Travis builds now.
+    Always discover channel manually, due to Travis bug.
+    Fix Travis tests.
+    Add Travis configuration and .gitignore files.
+    Test webhook.
+    [jan] Fix turning an Exception into a JSON-RPC error.
+    Update Turkish translations.
+    Update tr translation.
+    Add type parameter to .horde.yml files.
+    Update composer information.
+    Updated composer definitions.
+    Rename horde.yml files.
+    Don't use create_function().
+    Standardize library full names.
+    Generate horde.yml files for all components.
+    Happy New Year!
+    Use HTTPS.
+    phpdoc, spelling, etc...
+    Development mode for Horde_Rpc-2.1.8
 3.0.0alpha6:
   api: 3.0.0alpha1
   state:
@@ -98,7 +192,9 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[rla] Fix some PHP 8.1 issues.\n|+\n"
+  notes: |
+    [rla] Fix some PHP 8.1 issues.
+    |+
 3.0.0alpha3:
   api: 3.0.0alpha1
   state:
@@ -128,7 +224,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Fix turning an Exception into a JSON-RPC error.\n"
+  notes: |
+    [jan] Fix turning an Exception into a JSON-RPC error.
 2.1.9:
   api: 1.0.0
   state:
@@ -138,7 +235,9 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[mjr] Do not enforce autodiscover requests must be xml.\n|\n"
+  notes: |
+    [mjr] Do not enforce autodiscover requests must be xml.
+    |
 2.1.7:
   api: 1.0.0
   state:
@@ -148,7 +247,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Update Greek translation (Limperis Antonis <limperis@cti.gr>).\n"
+  notes: |
+    [jan] Update Greek translation (Limperis Antonis <limperis@cti.gr>).
 2.1.6:
   api: 1.0.0
   state:
@@ -158,7 +258,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Mark PHP 7 as supported.\n"
+  notes: |
+    [jan] Mark PHP 7 as supported.
 2.1.5:
   api: 1.0.0
   state:
@@ -168,7 +269,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[mjr] Send more appropriate HTTP status codes on ActiveSync authentication failure.\n"
+  notes: |
+    [mjr] Send more appropriate HTTP status codes on ActiveSync authentication failure.
 2.1.4:
   api: 1.0.0
   state:
@@ -178,7 +280,9 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[mjr] Fix fatal error when using pecl_http2.\n[mjr] Fix possible PHP error when returning HTTP 500 response.\n"
+  notes: |
+    [mjr] Fix fatal error when using pecl_http2.
+    [mjr] Fix possible PHP error when returning HTTP 500 response.
 2.1.3:
   api: 1.0.0
   state:
@@ -188,7 +292,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Fix return errors from jsonrpc requests.\n"
+  notes: |
+    [jan] Fix return errors from jsonrpc requests.
 2.1.2:
   api: 1.0.0
   state:
@@ -198,7 +303,9 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Support loading translations from Composer-installed package.\n[jan] Add Composer definition.\n"
+  notes: |
+    [jan] Support loading translations from Composer-installed package.
+    [jan] Add Composer definition.
 2.1.1:
   api: 1.0.0
   state:
@@ -208,7 +315,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[mjr] Correctly catch HTTP client exceptions.\n"
+  notes: |
+    [mjr] Correctly catch HTTP client exceptions.
 2.1.0:
   api: 1.0.0
   state:
@@ -218,7 +326,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "Final release.\n"
+  notes: |
+    Final release.
 2.1.0beta1:
   api: 1.0.0
   state:
@@ -228,7 +337,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Use Horde_Dav for DAV RPC backends.\n"
+  notes: |
+    [jan] Use Horde_Dav for DAV RPC backends.
 2.0.5:
   api: 1.0.0
   state:
@@ -238,7 +348,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Don't require an unstable package from a stable version.\n"
+  notes: |
+    [jan] Don't require an unstable package from a stable version.
 2.0.4:
   api: 1.0.0
   state:
@@ -248,7 +359,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Use Horde_Dav for DAV RPC backends.\n"
+  notes: |
+    [jan] Use Horde_Dav for DAV RPC backends.
 2.0.3:
   api: 1.0.0
   state:
@@ -258,7 +370,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Update French translation (Paul De Vlieger <paul.de_vlieger@moniut.univ-bpclermont.fr>).\n"
+  notes: |
+    [jan] Update French translation (Paul De Vlieger <paul.de_vlieger@moniut.univ-bpclermont.fr>).
 2.0.2:
   api: 1.0.0
   state:
@@ -268,7 +381,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Update Basque translation (Ibon Igartua <ibon.igartua@ehu.es>).\n"
+  notes: |
+    [jan] Update Basque translation (Ibon Igartua <ibon.igartua@ehu.es>).
 2.0.1:
   api: 1.0.0
   state:
@@ -278,7 +392,9 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[mjr] Workaround for broken iOS ActiveSync AUTODISCOVER requests (Bug #11624).\n[jan] Update Dutch translation (Arjen de Korte <build+horde@de-korte.org>).\n"
+  notes: |
+    [mjr] Workaround for broken iOS ActiveSync AUTODISCOVER requests (Bug #11624).
+    [jan] Update Dutch translation (Arjen de Korte <build+horde@de-korte.org>).
 2.0.0:
   api: 1.0.0
   state:
@@ -288,7 +404,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "First stable release for Horde 5.\n"
+  notes: |
+    First stable release for Horde 5.
 2.0.0RC1:
   api: 1.0.0
   state:
@@ -298,7 +415,9 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Use Horde's temporary directory for SyncML logs.\n[mjr] Allow autodiscover requests sent as OPTIONS requests.\n"
+  notes: |
+    [jan] Use Horde's temporary directory for SyncML logs.
+    [mjr] Allow autodiscover requests sent as OPTIONS requests.
 2.0.0beta1:
   api: 1.0.0
   state:
@@ -308,7 +427,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "First beta release for Horde 5.\n"
+  notes: |
+    First beta release for Horde 5.
 2.0.0alpha1:
   api: 1.0.0
   state:
@@ -318,7 +438,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "First alpha release for Horde 5.\n"
+  notes: |
+    First alpha release for Horde 5.
 1.0.4:
   api: 1.0.0
   state:
@@ -328,7 +449,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Support authentication via CGI.\n"
+  notes: |
+    [jan] Support authentication via CGI.
 1.0.3:
   api: 1.0.0
   state:
@@ -338,7 +460,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Fix WebDAV access to application resources.\n"
+  notes: |
+    [jan] Fix WebDAV access to application resources.
 1.0.2:
   api: 1.0.0
   state:
@@ -348,7 +471,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Update Latvian translation.\n"
+  notes: |
+    [jan] Update Latvian translation.
 1.0.1:
   api: 1.0.0
   state:
@@ -358,7 +482,10 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "[jan] Update Lithuanian translation.\n[jan] Update Brazilian Portuguese translation.\n[jan] Update Spanish translation.\n"
+  notes: |
+    [jan] Update Lithuanian translation.
+    [jan] Update Brazilian Portuguese translation.
+    [jan] Update Spanish translation.
 1.0.0:
   api: 1.0.0
   state:
@@ -368,7 +495,9 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "First stable release for Horde 4.\n[mjr] Fix for broken Nokia MfE clients (Bug #9757).\n"
+  notes: |
+    First stable release for Horde 4.
+    [mjr] Fix for broken Nokia MfE clients (Bug #9757).
 1.0.0RC2:
   api: 1.0.0
   state:
@@ -378,7 +507,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "Second release candidate for Horde 4.\n"
+  notes: |
+    Second release candidate for Horde 4.
 1.0.0RC1:
   api: 1.0.0
   state:
@@ -388,7 +518,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "First release candidate for Horde 4.\n"
+  notes: |
+    First release candidate for Horde 4.
 1.0.0beta1:
   api: 1.0.0
   state:
@@ -398,7 +529,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "First beta release for Horde 4.\n"
+  notes: |
+    First beta release for Horde 4.
 0.0.2:
   api: 0.0.2
   state:
@@ -408,4 +540,5 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: "Converted to package.xml 2.0 for pear.horde.org\n"
+  notes: |
+    Converted to package.xml 2.0 for pear.horde.org
